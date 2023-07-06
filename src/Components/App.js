@@ -1,21 +1,59 @@
-import React, { useEffect } from 'react';
-import Home from './Home';
-import Login from './Login';
-import { useSelector, useDispatch } from 'react-redux';
-import { loginWithToken } from '../store';
-import { Link, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import Home from "./Home";
+import LoginRegister from "./LoginRegister";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, Routes, Route } from "react-router-dom";
+import SingleMovie from "./SingleMovie";
+import SingleCast from "./SingleCast";
+import DegreesOfSeparation from "./DegreesOfSeperation";
+import Navbar from "./Navbar";
+import About from "./About";
+import { PageNotFound } from "./PageNotFound";
+import Favorites from "./Favorites";
+import Footer from "./Footer";
+import { loginWithToken } from "../store";
+import EditAccount from './EditAccount'
 
-const App = ()=> {
-  const { auth } = useSelector(state => state);
+const App = () => {
+  const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
-  useEffect(()=> {
-    dispatch(loginWithToken());
-  }, []);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // initial data loading here
+    dispatch(loginWithToken());
+    // when loaded then set loading to false
+    setLoading(false);
+  }, []);
 
   return (
     <div>
-      <h1>Reel Relations</h1>
+      <div>
+        <Navbar />
+        {
+        auth.id ? (
+          <div>
+            <Routes>
+              <Route path='/editAccount' element={<EditAccount />} />
+            </Routes>
+          </div>
+        ) : null
+      }
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movie/:id" element={<SingleMovie />} />
+          <Route path="/casts/:id" element={<SingleCast />} />
+          <Route
+            path="/degrees-of-separation/:casts1Id/:casts2Id"
+            element={<DegreesOfSeparation />}
+          />
+          <Route path="/about" element={<About />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/login" element={<LoginRegister />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </div>
+      <Footer />
     </div>
   );
 };

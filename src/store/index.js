@@ -28,6 +28,7 @@ const store = configureStore({
 export default store;
 export * from './auth';
 export * from './singleActorSlice';
+export * from './degreesOfSeperation'
 export * from './someActorsSlice'
 export * from './singleMovieSlice';
 export * from './user';
