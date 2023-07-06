@@ -56,7 +56,7 @@ const fetchMovieDetails = async (movieId) => {
 const syncAndSeed = async () => {
   await conn.sync({ force: false });
 
-  const totalPages = 10;
+  const totalPages = 1;
 
   try {
 
@@ -127,7 +127,7 @@ const syncAndSeed = async () => {
   } catch (error) {
     console.error("Error during seeding:", error);
   }
-  
+
 };
 
 module.exports = {

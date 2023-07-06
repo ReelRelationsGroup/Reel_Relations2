@@ -49,6 +49,12 @@ const authSlice = createSlice({
     builder.addCase(attemptLogin.fulfilled, (state, action)=>{
       return action.payload;
     })
+    builder.addCase(attemptLogin.rejected, (state, action)=> {
+      return {
+        ...state,
+        error: true,
+      }
+    })
   }
 });
 const { logout } = authSlice.actions;
