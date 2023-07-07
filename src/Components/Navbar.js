@@ -28,7 +28,7 @@ const Navbar = () => {
             onClick={() => setProfileOpen(!profileOpen)}
             className="text-white block border-2 border-slate-400 focus:outline-none focus:border-white hover:text-teal-200"
           >
-            Welcome {auth.username}
+            Welcome {auth.username.replace("Github-", "")}
           </button>
           {profileOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-md z-10 hover:text-white">
