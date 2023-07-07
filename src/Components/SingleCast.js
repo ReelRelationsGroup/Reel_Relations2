@@ -96,7 +96,7 @@ const SingleCast = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col md:flex-row text-slate-300">
       <div className="mx-6 w-full md:w-1/2">
         <h1>{singleActor.name}</h1>
         {auth.username && (
@@ -153,7 +153,6 @@ const SingleCast = () => {
                 {movie.title}
               </Link>
             </li>
-          
           ))}
         </ul>
         <div>

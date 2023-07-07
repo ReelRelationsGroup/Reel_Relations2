@@ -64,7 +64,7 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="text-slate-300">
       <div className="flex flex-wrap justify-center">
         <Star />
         <div className="ml-3 mr-3 mb-4 text-3xl font-bold">
@@ -79,25 +79,25 @@ const Home = () => {
 
       {/* Input fields for casts' (actors') names */}
       <div className="flex flex-wrap justify-center join">
-        <div className="btn btn-square join-item" disabled>
-          <SearchIcon size={24} className="text-black" />
+        <div className="text-white join-item" disabled>
+          <SearchIcon size={24} className="text-white" />
         </div>
         <input
           type="text"
           value={casts1Id}
           onChange={(e) => setCasts1Id(capitalizeFirstLetter(e.target.value))}
           placeholder="Enter 1st Actor"
-          className="xl:btn-xl btn-ghost join-item btn flex items-center border-2 border-secondary bg-base-300 text-2xl font-bold normal-case hover:bg-base-200"
+          className="join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200"
         />
         <div className="btn btn-square join-item" disabled>
-          <SearchIcon size={24} className="text-black" />
+          <SearchIcon size={24} className="text-white" />
         </div>
         <input
           type="text"
           value={casts2Id}
           onChange={(e) => setCasts2Id(capitalizeFirstLetter(e.target.value))}
           placeholder="Enter 2nd Actor"
-          className="xl:btn-xl btn-ghost join-item btn flex items-center border-2 border-secondary bg-base-300 text-2xl font-bold normal-case hover:bg-base-200"
+          className="join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200"
         />
         <button
           className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
