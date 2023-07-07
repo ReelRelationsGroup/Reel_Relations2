@@ -11,18 +11,17 @@ import About from "./About";
 import { PageNotFound } from "./PageNotFound";
 import Favorites from "./Favorites";
 import Footer from "./Footer";
-import { fetchActors, loginWithToken } from "../store";
+import { loginWithToken } from "../store";
 import EditAccount from './EditAccount'
 
 const App = () => {
-  const { auth, actors } = useSelector((state) => state);
+  const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // initial data loading here
     dispatch(loginWithToken());
-    dispatch(fetchActors());
     // when loaded then set loading to false
     setLoading(false);
   }, []);
@@ -54,9 +53,6 @@ const App = () => {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
-      <>
-        <h1>{actors.length}</h1>
-      </>
       <Footer />
     </div>
   );
