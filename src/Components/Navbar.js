@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { logout } from "../store";
 import { Clapperboard } from "lucide-react";
 import user from "../store/user";
-import EditAccount from './EditAccount'
+import EditAccount from "./EditAccount";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -17,9 +17,8 @@ const Navbar = () => {
   };
 
   const renderAuthButtons = () => {
-
     const handleMenuOptionClick = () => {
-      setProfileOpen(false); 
+      setProfileOpen(false);
     };
 
     if (auth.username) {
@@ -27,30 +26,33 @@ const Navbar = () => {
         <div className="relative">
           <button
             onClick={() => setProfileOpen(!profileOpen)}
-            className="block border-2 border-gray-600 focus:outline-none focus:border-white"
+            className="text-white block border-2 border-slate-400 focus:outline-none focus:border-white hover:text-teal-200"
           >
             Welcome {auth.username}
           </button>
           {profileOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-md z-10">
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-md z-10 hover:text-white">
               <Link
                 to="/favorites"
                 onClick={() => handleMenuOptionClick()}
-                className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
+                className="block px-4 py-2 text-gray-800 bg-white hover:bg-indigo-500 hover:text-white"
               >
                 My Favorites
               </Link>
               <div>
-              <Link to='/editAccount'
-              className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
-              >Edit Account</Link><br />
-            </div>
+                <Link
+                  to="/editAccount"
+                  className="block px-4 py-2 text-gray-800 bg-white hover:bg-indigo-500 hover:text-white"
+                >
+                  Edit Account
+                </Link>
+              </div>
               <button
                 onClick={() => {
-                  dispatch(logout())
-                  handleMenuOptionClick()
+                  dispatch(logout());
+                  handleMenuOptionClick();
                 }}
-                className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
+                className="block px-4 py-2 text-gray-800 bg-white hover:bg-indigo-500 hover:text-white"
               >
                 Logout
               </button>

@@ -1,9 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
-import { addFavoriteMovie, deleteFavoriteMovie, fetchFavoriteMovies, fetchMovieById } from "../store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+import {
+  addFavoriteMovie,
+  deleteFavoriteMovie,
+  fetchFavoriteMovies,
+  fetchMovieById,
+} from "../store";
 import { useParams, NavLink } from "react-router-dom";
 import Spinner from "./Spinner";
 
@@ -14,7 +19,7 @@ const SingleMovie = () => {
 
   const isMovieInFavorites = (movieId) => {
     if (favoriteMovies.length === 0) {
-      return false; 
+      return false;
     }
 
     return favoriteMovies.some((movie) => {
@@ -47,7 +52,7 @@ const SingleMovie = () => {
   return !singleMovie?.title ? (
     <Spinner />
   ) : (
-    <section className="mx-6 flex flex-col md:flex-row">
+    <section className="mx-6 flex flex-col md:flex-row text-slate-300">
       <div className="w-full md:w-1/3">
         <img
           className="w-full m-auto py-5 px-4 relative group"
@@ -57,16 +62,22 @@ const SingleMovie = () => {
       </div>
       <div className="w-full md:w-2/3 px-4 my-4">
         <h1 className="font-semibold text-3xl">
-          {singleMovie.title} ({releaseYear}) {auth.username && (
-          <span >
-          {isMovieInFavorites(singleMovie.id) ? (
-            <FontAwesomeIcon icon={solidHeart} onClick={() => handleToggleFavorite(singleMovie.id)} />
-          ) : (
-            <FontAwesomeIcon icon={regularHeart} onClick={() => handleToggleFavorite(singleMovie.id)}/>
+          {singleMovie.title} ({releaseYear}){" "}
+          {auth.username && (
+            <span>
+              {isMovieInFavorites(singleMovie.id) ? (
+                <FontAwesomeIcon
+                  icon={solidHeart}
+                  onClick={() => handleToggleFavorite(singleMovie.id)}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={regularHeart}
+                  onClick={() => handleToggleFavorite(singleMovie.id)}
+                />
+              )}
+            </span>
           )}
-        </span>
-        )
-        }
         </h1>
         <p>
           Released: {formattedDate} - User Score: {singleMovie.vote_average} -
