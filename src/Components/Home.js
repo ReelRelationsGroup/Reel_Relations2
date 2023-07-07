@@ -79,8 +79,14 @@ const Home = () => {
 
       {/* Input fields for casts' (actors') names */}
       <div className="flex flex-wrap justify-center join">
-        <div className="text-white join-item" disabled>
-          <SearchIcon size={24} className="text-white" />
+        <div
+          className="rounded-l-md btn btn-square join-item px-2 py-2 bg-slate-500"
+          disabled
+        >
+          <SearchIcon
+            size={24}
+            className="text-black border-none rounded-md bg-transparent"
+          />
         </div>
         <input
           type="text"
@@ -89,9 +95,16 @@ const Home = () => {
           placeholder="Enter 1st Actor"
           className="join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200"
         />
-        <div className="btn btn-square join-item" disabled>
-          <SearchIcon size={24} className="text-white" />
+        <div
+          className="btn btn-square join-item px-2 py-2 bg-slate-500"
+          disabled
+        >
+          <SearchIcon
+            size={24}
+            className="text-black border-none rounded-md bg-transparent"
+          />
         </div>
+
         <input
           type="text"
           value={casts2Id}
