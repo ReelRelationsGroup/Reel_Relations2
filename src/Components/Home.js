@@ -146,6 +146,7 @@ const Home = () => {
         </div>
         {loading && <Spinner />}
       </div>
+      <div className="h-20"></div>
     </div>
   );
 };

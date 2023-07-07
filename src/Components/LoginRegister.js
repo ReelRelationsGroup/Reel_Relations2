@@ -27,14 +27,13 @@ const LoginRegister = (props) => {
     ev.preventDefault();
     const response = await dispatch(attemptLogin(credentials)).then(
       (result) => {
-        if (response.error) {
+        if (result.payload.id) {
+          navigate('/');
+        } else if (response.error) {
           setError(response.payload.message);
-        } else {
-          result.payload.id, navigate("/");
         }
-      }
-    );
-  };
+      });
+  }
 
   const register = async (ev) => {
     ev.preventDefault();
