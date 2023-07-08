@@ -33,7 +33,7 @@ const SingleMovie = () => {
     } else {
       dispatch(addFavoriteMovie(movieId));
     }
-    dispatch(fetchFavoriteMovies());
+    // dispatch(fetchFavoriteMovies());
   };
 
   useEffect(() => {

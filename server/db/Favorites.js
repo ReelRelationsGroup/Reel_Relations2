@@ -20,6 +20,7 @@ const FavoriteCasts = conn.define("favoriteCasts", {
         autoIncrement: true,
     },
     actorId: {
+        foreignKey: true,
         type: INTEGER
     },
 });

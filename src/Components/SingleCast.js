@@ -37,7 +37,7 @@ const SingleCast = () => {
     } else {
       dispatch(addFavoriteCast(actorId));
     }
-    dispatch(fetchFavoriteCasts());
+    // dispatch(fetchFavoriteCasts());
   };
 
   useEffect(() => {

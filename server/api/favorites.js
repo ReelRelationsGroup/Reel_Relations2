@@ -52,13 +52,14 @@ app.post('/movie', async (req, res, next) => {
 });
 
 app.post('/cast', async (req, res, next) => {
+  console.log(req.body)
   try {
     const user = await User.findByToken(req.headers.authorization);
-    const favoriteMovie = await FavoriteCasts.create({
+    const favoriteCast = await FavoriteCasts.create({
       userId: user.id,
       actorId: req.body.castId,
     });
-    res.status(201).send(favoriteMovie);
+    res.status(201).send(favoriteCast);
   } catch (e) {
     next(e)
   }
