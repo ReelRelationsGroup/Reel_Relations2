@@ -27,6 +27,7 @@ const SingleCast = () => {
       return false;
     }
     return favoriteCasts.some((actor) => {
+      console.log(actor)
       return actor.actorId === actorId;
     });
   };

@@ -18,6 +18,7 @@ const SingleMovie = () => {
     }
 
     return favoriteMovies.some((movie) => {
+      console.log(movie)
       return movie.movieId === movieId;
     });
   };
