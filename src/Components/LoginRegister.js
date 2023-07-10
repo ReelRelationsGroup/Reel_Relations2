@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { attemptLogin } from "../store";
@@ -28,12 +28,13 @@ const LoginRegister = (props) => {
     const response = await dispatch(attemptLogin(credentials)).then(
       (result) => {
         if (result.payload.id) {
-          navigate('/');
+          navigate("/");
         } else if (response.error) {
           setError(response.payload.message);
         }
-      });
-  }
+      }
+    );
+  };
 
   const register = async (ev) => {
     ev.preventDefault();
@@ -46,6 +47,13 @@ const LoginRegister = (props) => {
     handleLoginFromCheckout;
     navigate("/");
   };
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
     <div className="flex items-center justify-center w-full h-60px">
