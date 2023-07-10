@@ -121,6 +121,7 @@ const Home = () => {
       </div>
       <div>
         {/* Displays the degrees of separation */}
+        {loading && <Spinner />}
         {degreesOfSeparation !== null && (
           <div className="flex flex-wrap font-semibold justify-center text-2xl my-7">
             Degrees of Separation: {degreesOfSeparation}
@@ -157,7 +158,6 @@ const Home = () => {
             </div>
           ))}
         </div>
-        {loading && <Spinner />}
       </div>
       <div className="h-20"></div>
     </div>
