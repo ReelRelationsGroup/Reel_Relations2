@@ -30,7 +30,7 @@ const Home = () => {
     for (let i = 0; i < path.length; i++) {
       for (let j = 0; j < someActors.length; j++) {
         if (someActors[j].id === path[i]) {
-          if (moviesPath[j]) {
+          if (moviesPath && moviesPath[i]) {
             temp.push(someActors[j]);
             temp.push(moviesPath[i][0]);
           } else {
@@ -127,8 +127,9 @@ const Home = () => {
           </div>
         )}
         <div className="">
-          {flowchart.map((node) => (
-            <div className="flex flex-wrap justify-center">
+          {flowchart.map((node, index) => (
+            // used index of array as a key
+            <div key={index} className="flex flex-wrap justify-center">
               {node.name ? (
                 <Link
                   to={`/casts/${node.id}`}
