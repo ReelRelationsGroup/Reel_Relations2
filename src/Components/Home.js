@@ -32,7 +32,7 @@ const Home = () => {
         if (someActors[j].id === path[i]) {
           if (moviesPath[j]) {
             temp.push(someActors[j]);
-            temp.push(moviesPath[i][0]);
+            temp.push(moviesPath[i][Math.floor(Math.random()*moviesPath[i].length)]);
           } else {
             temp.push(someActors[j]);
           }
