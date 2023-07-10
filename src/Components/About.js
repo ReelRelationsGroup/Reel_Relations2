@@ -2,7 +2,7 @@ import React from "react";
 
 const About = () => {
   return (
-    <div className="text-slate-300 mx-auto w-1/3 text-xs">
+    <div className="text-slate-300 mx-auto lg:w-1/3 sm:w-2/3 lg:text-xs sm:text-sm">
        <h1 className="text-center mb-5">ABOUT US</h1>
       
       <div className= "mb-5">Six degrees of separation is the idea that all people are six or fewer 
