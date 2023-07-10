@@ -16,8 +16,10 @@ const Favorites = () => {
         <div>
             <h1>Your Favorites</h1>
             <h3 
+                className="cursor-pointer"
                 onClick={() => setActiveTab(0)}>Favorite Movies</h3>
             <h3 
+                className="cursor-pointer"
                 onClick={() => setActiveTab(1)}>Favorite Casts</h3>
             {activeTab == 0 ? <FavoriteMovies /> : <FavoriteCasts />}
         </div>
