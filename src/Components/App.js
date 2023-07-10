@@ -12,10 +12,10 @@ import { PageNotFound } from "./PageNotFound";
 import Favorites from "./Favorites";
 import Footer from "./Footer";
 import { fetchActors, loginWithToken } from "../store";
-import EditAccount from './EditAccount'
+import EditAccount from "./EditAccount";
 
 const App = () => {
-  const { auth , actors} = useSelector((state) => state);
+  const { auth, actors } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
@@ -31,16 +31,10 @@ const App = () => {
     <div>
       <div>
         <Navbar />
-        {
-        auth.id ? (
-          <div>
-            <Routes>
-              <Route path='/editAccount' element={<EditAccount />} />
-            </Routes>
-          </div>
-        ) : null
-      }
         <Routes>
+          {auth.id ? (
+            <Route path="/editAccount" element={<EditAccount />} />
+          ) : null}
           <Route path="/" element={<Home />} />
           <Route path="/movie/:id" element={<SingleMovie />} />
           <Route path="/casts/:id" element={<SingleCast />} />
