@@ -31,7 +31,7 @@ const Navbar = () => {
             Welcome {auth.username.replace("Github-", "")}
           </button>
           {profileOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-md z-10 hover:text-white">
+            <div className="absolute left-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-md z-10 hover:text-white">
               <Link
                 to="/favorites"
                 onClick={() => handleMenuOptionClick()}
