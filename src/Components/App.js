@@ -15,7 +15,6 @@ import { fetchActors, loginWithToken } from "../store";
 import EditAccount from "./EditAccount";
 
 const App = () => {
-  const { user: currentUser } = useSelector((state) => state.auth) || {};
   const { actors } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
@@ -42,9 +41,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/login" element={<LoginRegister />} />
-        {currentUser && currentUser.id ? (
-          <Route path="/editAccount" element={<EditAccount />} />
-        ) : null}
+        <Route path="/editAccount" element={<EditAccount />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <div>
