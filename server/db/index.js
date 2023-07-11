@@ -54,7 +54,7 @@ const fetchMovieDetails = async (movieId) => {
 const syncAndSeed = async () => {
   await conn.sync({ force: false }); // Change to False when on localhost
 
-  // const totalPages = 25;
+  // const totalPages = 75;
 
   // try {
   //   for (let page = 1; page < totalPages; page++) {
@@ -122,11 +122,11 @@ const syncAndSeed = async () => {
   //           }
   //         }
   //       }
+  //       }
   //     }
+  //   } catch (error) {
+  //     console.error("Error during seeding:", error);
   //   }
-  // } catch (error) {
-  //   console.error("Error during seeding:", error);
-  // }
 };
 
 module.exports = {
