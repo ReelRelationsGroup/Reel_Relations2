@@ -15,7 +15,8 @@ import { fetchActors, loginWithToken } from "../store";
 import EditAccount from "./EditAccount";
 
 const App = () => {
-  const { auth, actors } = useSelector((state) => state);
+  const { user: currentUser } = useSelector((state) => state.auth) || {};
+  const { actors } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
@@ -29,25 +30,23 @@ const App = () => {
 
   return (
     <div>
-      <div>
-        <Navbar />
-        <Routes>
-          {auth.id ? (
-            <Route path="/editAccount" element={<EditAccount />} />
-          ) : null}
-          <Route path="/" element={<Home />} />
-          <Route path="/movie/:id" element={<SingleMovie />} />
-          <Route path="/casts/:id" element={<SingleCast />} />
-          <Route
-            path="/degrees-of-separation/:casts1Id/:casts2Id"
-            element={<DegreesOfSeparation />}
-          />
-          <Route path="/about" element={<About />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/login" element={<LoginRegister />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movie/:id" element={<SingleMovie />} />
+        <Route path="/casts/:id" element={<SingleCast />} />
+        <Route
+          path="/degrees-of-separation/:casts1Id/:casts2Id"
+          element={<DegreesOfSeparation />}
+        />
+        <Route path="/about" element={<About />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/login" element={<LoginRegister />} />
+        {currentUser && currentUser.id ? (
+          <Route path="/editAccount" element={<EditAccount />} />
+        ) : null}
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
       <div>
         <h1>{actors.length}</h1>
       </div>

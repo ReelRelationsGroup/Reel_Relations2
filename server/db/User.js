@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT = process.env.JWT;
 const axios = require("axios");
+const { BOOLEAN } = require("sequelize");
 
 const User = conn.define("user", {
   id: {
@@ -22,7 +23,22 @@ const User = conn.define("user", {
     validate: {
       notEmpty: true,
     },
-    unique: true,
+    unique: {
+      args: true,
+      msg: "Username Already Exists",
+    },
+  },
+  email: {
+    type: STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      isEmail: true,
+    },
+    unique: {
+      args: true,
+      msg: "Email Already In Use.",
+    },
   },
   password: {
     type: STRING,
@@ -31,12 +47,18 @@ const User = conn.define("user", {
       notEmpty: true,
     },
   },
+  isAdmin: {
+    type: BOOLEAN,
+    defaultValue: false,
+  },
   place: {
     type: JSON,
     defaultValue: {},
   },
   avatar: {
     type: TEXT,
+    defaultValue:
+      "https://images.assetsdelivery.com/compings_v2/alexutemov/alexutemov1608/alexutemov160800980.jpg",
   },
 });
 
@@ -50,15 +72,43 @@ User.findByToken = async function (token) {
   try {
     const { id } = jwt.verify(token, process.env.JWT);
     const user = await this.findByPk(id);
-    if (user) {
-      return user;
+    if (!user) {
+      const error = new Error("Bad Credentials");
+      error.status = 401;
+      throw error;
     }
-    throw "User Not Found";
+    return user;
   } catch (ex) {
-    const error = new Error("Bad Credentials");
-    error.status = 401;
+    const error = new Error(
+      ex instanceof jwt.JsonWebTokenError ? "Bad Credentials" : ex.message
+    );
+    error.status = ex instanceof jwt.JsonWebTokenError ? 401 : 500;
     throw error;
   }
+};
+
+// setAdmin is instance method that sets isAdmin to true and saves the user
+User.prototype.setAdmin = async function (bool) {
+  this.isAdmin = bool;
+  await this.save();
+  return this;
+};
+
+User.prototype.getFavorites = async function () {
+  const favorites = await conn.models.favorites.findAll({
+    where: {
+      userId: this.id,
+    },
+    include: [
+      {
+        model: conn.models.casts,
+      },
+      {
+        model: conn.models.movies,
+      },
+    ],
+  });
+  return favorites;
 };
 
 User.prototype.generateToken = function () {
@@ -106,7 +156,10 @@ User.authenticateGithub = async function (code) {
     },
   });
 
-  const { login } = response.data;
+  const { login, avatar_url, email } = response.data; // get the avatar_url and email
+
+  // Assign a placeholder email if the GitHub email is not available
+  const userEmail = email ? email : `${login}@placeholder.com`;
 
   let user = await User.findOne({
     where: { login },
@@ -116,12 +169,15 @@ User.authenticateGithub = async function (code) {
     user = await User.create({
       login,
       username: `Github-${login}`,
+      email: userEmail, // provide the email here
       password: `random-${Math.random()}`,
+      avatar: avatar_url, // add the avatar url here
     });
   }
 
   await user.update({
     username: `Github-${login}`,
+    avatar: avatar_url, // update the avatar url here
   });
 
   return user.generateToken();

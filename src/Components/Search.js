@@ -23,7 +23,7 @@ const Search = () => {
       {loading && <Spinner />}{" "}
       {/* Display the Spinner component when loading is true */}
       <form
-        autocomplete="off
+        autoComplete="off
         "
         action={search}
       >

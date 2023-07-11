@@ -54,6 +54,7 @@ const fetchMovieDetails = async (movieId) => {
 const syncAndSeed = async () => {
   await conn.sync({ force: false }); // Change to False when on localhost
 
+  // comment out here to before module.exports to avoid seeding
   // const totalPages = 100;
 
   // try {

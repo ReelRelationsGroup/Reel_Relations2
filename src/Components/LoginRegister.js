@@ -17,6 +17,7 @@ const LoginRegister = (props) => {
   });
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
   const onChange = (ev) => {
@@ -38,7 +39,9 @@ const LoginRegister = (props) => {
 
   const register = async (ev) => {
     ev.preventDefault();
-    await dispatch(addUserProfile({ username, password, permissions: false }));
+    await dispatch(
+      addUserProfile({ username, password, email, permissions: false })
+    );
     credentials.username = username;
     credentials.password = password;
     dispatch(attemptLogin(credentials));
@@ -64,7 +67,6 @@ const LoginRegister = (props) => {
         </h2>
         <div className="loginRegisterBox">
           <h3 className="text-slate-300 mx-4">Returning Users</h3>
-          <hr className="formDivider" />
           <form onSubmit={login}>
             {auth.error === true && (
               <div>
@@ -74,51 +76,62 @@ const LoginRegister = (props) => {
               </div>
             )}
             <div className="inputContainer">
-              <input
-                className="placeholder-gray-500 bg-white text-black p-1"
-                placeholder="username"
-                value={credentials.username}
-                name="username"
-                onChange={onChange}
-              />
-              <input
-                className="placeholder-gray-500 bg-white text-black p-1"
-                placeholder="password"
-                type="password"
-                name="password"
-                value={credentials.password}
-                onChange={onChange}
-              />
-              <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 mx-4 lg:mt-0">
-                Login
-              </button>
+              <div className="flex flex-col max-w-sm">
+                <input
+                  className="placeholder-gray-500 bg-white text-black p-1 mb-2"
+                  placeholder="username"
+                  value={credentials.username}
+                  name="username"
+                  onChange={onChange}
+                />
+                <input
+                  className="placeholder-gray-500 bg-white text-black p-1"
+                  placeholder="password"
+                  type="password"
+                  name="password"
+                  autoComplete="current-password"
+                  value={credentials.password}
+                  onChange={onChange}
+                />
+              </div>
             </div>
+            <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-2 mx-4 lg:mt-0">
+              Login
+            </button>
           </form>
         </div>
         <div className="loginRegisterBox">
-          <h3 className="text-slate-300 mx-4">New Users</h3>
-          <hr className="formDivider" />
+          <h3 className="text-slate-300 mx-4 mt-6">New Users</h3>
           <form onSubmit={register}>
             <div className="inputContainer">
-              <input
-                className="placeholder-gray-500 bg-white text-black p-1"
-                placeholder="username"
-                name="username"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
-              />
-              <input
-                className="placeholder-gray-500 bg-white text-black p-1"
-                placeholder="password"
-                type="password"
-                name="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-              />
-              <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 mx-4 lg:mt-0">
-                Register
-              </button>
+              <div className="flex flex-col max-w-sm">
+                <input
+                  className="placeholder-gray-500 bg-white text-black p-1 mb-2"
+                  placeholder="username"
+                  name="username"
+                  value={username}
+                  onChange={(event) => setUsername(event.target.value)}
+                />
+                <input
+                  className="placeholder-gray-500 bg-white text-black p-1"
+                  placeholder="password"
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+                <input
+                  className="placeholder-gray-500 bg-white text-black mt-2 p-1"
+                  placeholder="email"
+                  name="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </div>
             </div>
+            <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-2 mx-4 lg:mt-0">
+              Register
+            </button>
           </form>
         </div>
 
@@ -130,7 +143,7 @@ const LoginRegister = (props) => {
         <div className="flex justify-center mt-6">
           <a
             href={`https://github.com/login/oauth/authorize?client_id=${window.CLIENT_ID}`}
-            className="border border-white rounded flex items-center text-black p-2 min w-96 justify-center"
+            className="border border-white rounded flex items-center text-black p-2 min max-w-sm justify-center"
           >
             <GithubIcon size={24} className="mr-2 text-white opacity-100" />
             <span className="text-white opacity-100 ml-3">
