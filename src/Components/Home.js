@@ -32,7 +32,7 @@ const Home = () => {
         if (someActors[j].id === path[i]) {
           if (moviesPath && moviesPath[i]) {
             temp.push(someActors[j]);
-            temp.push(moviesPath[i][0]);
+            temp.push(moviesPath[i][Math.floor(Math.random()*moviesPath[i].length)]);
           } else {
             temp.push(someActors[j]);
           }
@@ -121,44 +121,48 @@ const Home = () => {
       </div>
       <div>
         {/* Displays the degrees of separation */}
-        {degreesOfSeparation !== null && (
-          <div className="flex flex-wrap font-semibold justify-center text-2xl my-7">
-            Degrees of Separation: {degreesOfSeparation}
-          </div>
-        )}
-        <div className="">
-          {flowchart.map((node, index) => (
-            // used index of array as a key
-            <div key={index} className="flex flex-wrap justify-center">
-              {node.name ? (
-                <Link
-                  to={`/casts/${node.id}`}
-                  className="font-semibold text-xl"
-                >
-                  {node.name}
-                </Link>
-              ) : (
-                <div>
-                  <p className="flex flex-wrap justify-center my-5 text-md items-center font-normal italic">
-                    {" "}
-                    who was in{" "}
-                  </p>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <div>
+            {degreesOfSeparation !== null && (
+              <div className="flex flex-wrap font-semibold justify-center text-2xl my-7">
+                Degrees of Separation: {degreesOfSeparation}
+              </div>
+            )}
+            <div className="">
+            {flowchart.map((node) => (
+              <div className="flex flex-wrap justify-center">
+                {node.name ? (
                   <Link
-                    to={`/movie/${node.id}`}
+                    to={`/casts/${node.id}`}
                     className="font-semibold text-xl"
                   >
-                    '{node.title}'
+                    {node.name}
                   </Link>
-                  <p className="flex flex-wrap justify-center my-5 text-md items-center font-normal italic">
-                    {" "}
-                    with
-                  </p>
-                </div>
-              )}
+                ) : (
+                  <div>
+                    <p className="flex flex-wrap justify-center my-5 text-md items-center font-normal italic">
+                      {" "}
+                      who was in{" "}
+                    </p>
+                    <Link
+                      to={`/movie/${node.id}`}
+                      className="font-semibold text-xl"
+                    >
+                      '{node.title}'
+                    </Link>
+                    <p className="flex flex-wrap justify-center my-5 text-md items-center font-normal italic">
+                      {" "}
+                      with
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))}
             </div>
-          ))}
-        </div>
-        {loading && <Spinner />}
+          </div> 
+        )}
       </div>
       <div className="h-20"></div>
     </div>
