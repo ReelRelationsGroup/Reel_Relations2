@@ -1,92 +1,147 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../store/user";
+import { Link } from "react-router-dom";
 import { logout } from "../store";
-import { useNavigate } from "react-router-dom";
+import { Clapperboard } from "lucide-react";
+import user from "../store/user";
+import EditAccount from "./EditAccount";
 
-const EditAccount = () => {
-  const { auth } = useSelector((state) => state);
+export const DefAvatar =
+  "https://images.assetsdelivery.com/compings_v2/alexutemov/alexutemov1608/alexutemov160800980.jpg";
+
+const Navbar = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { auth } = useSelector((state) => state);
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
-  const [username, setUsername] = useState(auth.username);
-  const [password, setPassword] = useState("");
-  const [passwordChange, setPasswordChange] = useState(false);
+  const toggleMenu = () => {
+    setMenuOpen(!isMenuOpen);
+  };
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    const id = auth.id;
-    if (passwordChange) {
-      const data = {
-        username,
-        password,
-      };
-      dispatch(updateUser({ data, id }));
+  const renderAuthButtons = () => {
+    const handleMenuOptionClick = () => {
+      setProfileOpen(false);
+    };
+
+    if (auth.username) {
+      return (
+        <div className="relative">
+          <button
+            onClick={() => setProfileOpen(!profileOpen)}
+            className="my-3 mx-3 flex justify-center rounded-full items-center text-white block border-2 border-slate-400 focus:outline-none focus:border-white hover:text-teal-200"
+          >
+            {auth.avatar && (
+              <img
+                src={auth.avatar ? auth.avatar : DefAvatar}
+                alt={auth.username}
+                className="mx-2 my-2 h-12 w-12 justify-center items-space rounded-full"
+              />
+            )}
+            {auth.username}
+          </button>
+          {profileOpen && (
+            <div className="absolute left-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-md z-10 hover:text-white">
+              <Link
+                to="/favorites"
+                onClick={() => handleMenuOptionClick()}
+                className="block px-4 py-2 text-gray-800 bg-white hover:bg-indigo-500 hover:text-white"
+              >
+                My Favorites
+              </Link>
+              <div>
+                <Link
+                  to="/editAccount"
+                  className="block px-4 py-2 text-gray-800 bg-white hover:bg-indigo-500 hover:text-white"
+                >
+                  Edit Account
+                </Link>
+              </div>
+              <button
+                onClick={() => {
+                  dispatch(logout());
+                  handleMenuOptionClick();
+                }}
+                className="block px-4 py-2 text-gray-800 bg-white hover:bg-indigo-500 hover:text-white"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      );
     } else {
-      const data = {
-        username,
-      };
-      dispatch(updateUser({ data, id }));
+      return (
+        <div>
+          <Link
+            to="/login"
+            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+          >
+            Login
+          </Link>
+        </div>
+      );
     }
-    dispatch(logout());
-    navigate("/");
   };
 
   return (
-    <div className="flex flex-col items-center justify-center text-slate-300">
-      <h1 className="text-2xl my-4">Edit Account Info</h1>
-      <form onSubmit={handleSubmit} className="w-full max-w-xs">
-        <div className="mb-4">
-          <label className="block">Username</label>
-          <input
-            className="w-full p-2 text-black border border-gray-300 bg-white"
-            placeholder="Edit Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        {passwordChange ? (
-          <div className="mb-4">
-            <label className="block">Password</label>
-            <input
-              className="w-full p-2 border border-gray-300 bg-white text-black"
-              placeholder="Enter New Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <div className="flex justify-center">
-              <button
-                className="mt-4 border border-white text-white rounded flex items-center text-black min w-96 justify-center"
-                onClick={() => {
-                  setPasswordChange(false);
-                  setPassword("");
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="flex justify-center">
-            <button
-              className="mx-2 border border-white text-white rounded flex items-center text-black min w-96 justify-center mb-2"
-              onClick={() => setPasswordChange(true)}
-            >
-              Change Password
-            </button>
-          </div>
-        )}
-        <div className="flex justify-center">
-          <button
-            className="border border-white text-white rounded flex items-center text-black min w-96 justify-center mb-2"
-            disabled={passwordChange && password === ""}
+    <nav className="flex items-center justify-between flex-wrap p-6">
+      <div className="flex items-center flex-shrink-0 text-white mr-6">
+        <span className="flex font-semibold text-xl tracking-tight">
+          <Clapperboard />
+          <Link to="/">Reel Relations</Link>
+        </span>
+      </div>
+      <div className="block lg:hidden">
+        <button
+          onClick={toggleMenu}
+          className="flex items-center px-3 py-2 border rounded text-white-200 border-white-400 hover:text-white hover:border-teal-400"
+        >
+          <svg
+            className="fill-current h-3 w-3"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            Submit
-          </button>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+          </svg>
+        </button>
+      </div>
+      <div></div>
+      <div
+        className={`${
+          isMenuOpen ? "block" : "hidden"
+        } w-full lg:flex lg:items-center lg:w-auto`}
+      >
+        <div className="text-sm lg:flex-grow">
+          <Link
+            to="/"
+            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+          >
+            Home
+          </Link>
+          <Link
+            to="/about"
+            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+          >
+            About
+          </Link>
+          <Link
+            to="/casts/85"
+            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+          >
+            Single Actor
+          </Link>
+          <Link
+            to="/movie/10196"
+            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+          >
+            Single Movie
+          </Link>
         </div>
-      </form>
-    </div>
+        {renderAuthButtons()}
+      </div>
+    </nav>
   );
 };
 
-export default EditAccount;
+export default Navbar;
