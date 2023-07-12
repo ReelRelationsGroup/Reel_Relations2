@@ -65,61 +65,72 @@ const Home = () => {
 
   return (
     <div className="text-slate-300">
-      <div className="flex flex-wrap justify-center">
-        <Star />
-        <div className="ml-3 mr-3 mb-4 text-3xl font-bold">
-          Welcome {auth.username} to Reel Relations!!{" "}
-        </div>
-        <Star />
+
+      
+
+        <div className="flex flex-wrap justify-center">
+          <Star />
+            <div className="ml-3 mr-3 mb-4 text-3xl font-bold">
+              Welcome {auth.username} to Reel Relations!!{" "}
+            </div>
+          <Star />
       </div>
-      <p className="my-6 mx-20 flex flex-wrap justify-center items-center">
-        Discover the Enchanting World of Hollywood & Cinema From Across the
-        Globe & Uncover Why It's All About Who You Know
-      </p>
+
+        <p className="my-6 mx-20 flex flex-wrap justify-center items-center">
+          Discover the Enchanting World of Hollywood & Cinema From Across the
+          Globe & Uncover Why It's All About Who You Know
+       </p>
 
       {/* Input fields for casts' (actors') names */}
-      <div className="flex flex-wrap justify-center join">
-        <div
-          className="rounded-l-md btn btn-square join-item px-2 py-2 bg-slate-500"
-          disabled
-        >
-          <SearchIcon
-            size={24}
-            className="text-black border-none rounded-md bg-transparent"
-          />
-        </div>
-        <input
-          type="text"
-          value={casts1Id}
-          onChange={(e) => setCasts1Id(capitalizeFirstLetter(e.target.value))}
-          placeholder="Enter 1st Actor"
-          className="join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200"
-        />
-        <div
-          className="btn btn-square join-item px-2 py-2 bg-slate-500"
-          disabled
-        >
-          <SearchIcon
-            size={24}
-            className="text-black border-none rounded-md bg-transparent"
+      <div className="flex flex-wrap justify-center sm:items-center flex-col lg:flex-row">
+        <div className="flex flex-wrap justify-center">
+          <div
+           className="rounded-l-md btn btn-square join-item px-2 py-2 bg-slate-500"
+            disabled
+         >
+            <SearchIcon
+              size={24}
+              className="text-black border-none rounded-md bg-transparent"
+            />
+          </div>
+        
+          <input
+            type="text"
+            value={casts1Id}
+            onChange={(e) => setCasts1Id(capitalizeFirstLetter(e.target.value))}
+            placeholder="Enter 1st Actor"
+            className="join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200"
           />
         </div>
 
-        <input
-          type="text"
-          value={casts2Id}
-          onChange={(e) => setCasts2Id(capitalizeFirstLetter(e.target.value))}
-          placeholder="Enter 2nd Actor"
-          className="join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200"
-        />
-        <button
-          className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-          onClick={findLink}
-        >
-          Find Link
-        </button>
-      </div>
-      <div>
+        <div className="flex flex-wrap justify-center">
+          <div
+            className="rounded-l-md btn btn-square join-item px-2 py-2 bg-slate-500"
+            disabled
+            >
+            <SearchIcon
+              size={24}
+              className="text-black border-none rounded-md bg-transparent"
+            />
+          </div>
+          <input
+            type="text"
+            value={casts2Id}
+            onChange={(e) => setCasts2Id(capitalizeFirstLetter(e.target.value))}
+            placeholder="Enter 2nd Actor"
+            className="join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200"
+          />
+         </div>
+         
+          <button
+            className=" inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+            onClick={findLink}
+          >
+            Find Link
+          </button>
+          
+        </div>
+        <div>
         {/* Displays the degrees of separation */}
         {loading ? (
           <Spinner />
