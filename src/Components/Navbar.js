@@ -33,14 +33,7 @@ const Navbar = () => {
           >
             {auth.avatar && (
               <img
-                src={auth.avatar}
-                alt={auth.username.replace("Github-", "")}
-                className="mx-1 my-1 h-12 w-12 rounded-full"
-              />
-            )}
-            {!auth.avatar && (
-              <img
-                src={DEFAULT_AVATAR_URL}
+                src={auth.avatar ? auth.avatar : DEFAULT_AVATAR_URL}
                 alt={auth.username.replace("Github-", "")}
                 className="mx-1 my-1 h-12 w-12 rounded-full"
               />

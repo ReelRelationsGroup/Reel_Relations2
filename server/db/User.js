@@ -57,8 +57,6 @@ const User = conn.define("user", {
   },
   avatar: {
     type: TEXT,
-    defaultValue:
-      "https://images.assetsdelivery.com/compings_v2/alexutemov/alexutemov1608/alexutemov160800980.jpg",
   },
 });
 
