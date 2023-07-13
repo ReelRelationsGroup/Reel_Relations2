@@ -5,6 +5,8 @@ import { logout, fetchSomeActors, clearSomeActors } from "../store";
 import { SearchIcon, Star } from "lucide-react";
 import { fetchDegreesOfSeparation } from "../utils/api";
 import Spinner from "./Spinner";
+import Autosuggest from 'react-autosuggest';
+import axios from 'axios';
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -18,6 +20,7 @@ const Home = () => {
   const [path, setPath] = useState([]);
   const [moviesPath, setMoviesPath] = useState(null);
   const [flowchart, setFlowchart] = useState([]);
+  const [suggestions, setSuggestions] = useState([]); // Moved inside the component body
 
   useEffect(() => {
     for (let i = 0; i < path.length; i++) {
@@ -63,6 +66,40 @@ const Home = () => {
     }
   };
 
+  const fetchSuggestions = async (value) => {
+    try {
+      const { data } = await axios.get("/api/actors");
+      const actors = data.map((item) => item.name);
+      const filteredActors = actors.filter((actor) =>
+        typeof actor === "string" && actor.toLowerCase().startsWith(value.toLowerCase())
+      );
+      const limitedSuggestions = filteredActors.slice(0, 5); // Limit suggestions to 7 items
+      return limitedSuggestions;
+    } catch (err) {
+      console.log(err);
+      return [];
+    }
+  };
+
+  const renderSuggestion = (suggestion) => {
+    return (
+      <div className="p-2 hover:bg-gray-100 cursor-pointer">
+        {suggestion}
+      </div>
+    );
+  };
+
+  const onSuggestionsFetchRequested = async ({ value }) => {
+    const suggestions = await fetchSuggestions(value);
+    setSuggestions(suggestions);
+  };
+
+  const onSuggestionsClearRequested = () => {
+    setSuggestions([]);
+  };
+
+ 
+
   return (
     <div className="text-slate-300">
 
@@ -81,29 +118,35 @@ const Home = () => {
           Globe & Uncover Why It's All About Who You Know
        </p>
 
-      {/* Input fields for casts' (actors') names */}
+          {/* Input fields for casts' (actors') names */}
       <div className="flex flex-wrap justify-center sm:items-center flex-col lg:flex-row">
-        <div className="flex flex-wrap justify-center">
-          <div
-           className="rounded-l-md btn btn-square join-item px-2 py-2 bg-slate-500"
-            disabled
-         >
-            <SearchIcon
-              size={24}
-              className="text-black border-none rounded-md bg-transparent"
-            />
+        <div className="flex justify-center relative">
+          <div className="rounded-l-md btn btn-square join-item px-2 py-2 bg-slate-500" disabled>
+            <SearchIcon size={24} className="text-black border-none rounded-md bg-transparent" />
           </div>
-        
-          <input
-            type="text"
-            value={casts1Id}
-            onChange={(e) => setCasts1Id(capitalizeFirstLetter(e.target.value))}
-            placeholder="Enter 1st Actor"
-            className="join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200"
+
+          <Autosuggest
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={onSuggestionsClearRequested}
+            getSuggestionValue={(suggestion) => suggestion}
+            renderSuggestion={renderSuggestion}
+            inputProps={{
+              value: casts1Id,
+              onChange: (e, { newValue }) => setCasts1Id(newValue),
+              placeholder: 'Enter 1st Actor',
+              className: 'join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200',
+            }}
+            theme={{
+              container: 'w-full',
+              input: 'p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-base-200 focus:outline-none',
+              suggestionsContainer: 'absolute z-10 mt-2 w-full rounded-lg shadow-lg',
+              suggestionsList: 'bg-white',
+            }}
           />
         </div>
 
-        <div className="flex flex-wrap justify-center">
+        <div className="flex justify-center">
           <div
             className="rounded-l-md btn btn-square join-item px-2 py-2 bg-slate-500"
             disabled
@@ -113,15 +156,26 @@ const Home = () => {
               className="text-black border-none rounded-md bg-transparent"
             />
           </div>
-          <input
-            type="text"
-            value={casts2Id}
-            onChange={(e) => setCasts2Id(capitalizeFirstLetter(e.target.value))}
-            placeholder="Enter 2nd Actor"
-            className="join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200"
+          <Autosuggest
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={onSuggestionsClearRequested}
+            getSuggestionValue={(suggestion) => suggestion}
+            renderSuggestion={renderSuggestion}
+            inputProps={{
+              value: casts2Id,
+              onChange: (e, { newValue }) => setCasts2Id(newValue),
+              placeholder: 'Enter 2nd Actor',
+              className: 'join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200',
+            }}
+            theme={{
+              container: 'w-full',
+              input: 'p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-base-200 focus:outline-none',
+              suggestionsContainer: 'absolute z-10 mt-2 w-full rounded-lg shadow-lg',
+              suggestionsList: 'bg-white',
+            }}
           />
-         </div>
-         
+        </div>
           <button
             className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
             onClick={findLink}
