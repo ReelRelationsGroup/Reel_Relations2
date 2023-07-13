@@ -151,31 +151,33 @@ const SingleCast = () => {
         </section>
         
         {/*<Carousel movies={singleActor.movie_credits.cast} /> */}
-        <section className="mt-[30px]">
+        <section className="mt-[30px] mb-2">
             <h3 className="text-lg font-bold">Acting: </h3>
-            <ul>
-            {currentMovies.map((movie) => (
-                <li key={movie.id}>
-                <Link className="block" to={`/movie/${movie.id}`}>
-                    {movie.title}
-                </Link>
-                </li>
-            ))}
-            </ul>
+                <ul>
+                {currentMovies.map((movie) => (
+                    <li key={movie.id} className="my-4">
+                    <Link className="block" to={`/movie/${movie.id}`}>
+                        {movie.title}
+                    </Link>
+                    <div className="pl-4">
+                        <span>as </span>
+                        <span>{movie.character}</span>
+                    </div>
+                    </li>
+                ))}
+                </ul>
             <div>
                 {singleActor.movie_credits.cast.length > moviesPerPage && (
-                    <ul>
+                    <ul className="flex space-x-2">
                     {Array.from(
-                        Array(
-                        Math.ceil(
-                            singleActor.movie_credits.cast.length / moviesPerPage
-                        )
-                        ),
+                        Array(Math.ceil(singleActor.movie_credits.cast.length / moviesPerPage)),
                         (value, index) => (
                         <li key={index}>
                             <button
-                            className={`pagination-item ${
-                                currentPage === index + 1 ? "active" : ""
+                            className={`px-2 py-1 rounded-md focus:outline-none ${
+                                currentPage === index + 1
+                                ? "bg-blue-500 text-white"
+                                : "bg-white text-blue-500 hover:bg-blue-100"
                             }`}
                             onClick={() => paginate(index + 1)}
                             >
@@ -186,7 +188,7 @@ const SingleCast = () => {
                     )}
                     </ul>
                 )}
-            </div>         
+            </div>
         </section>
       </div>
     </div>
