@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export const PageNotFound = () => {
   return (
     <>
-      <h1 className="flex flex-wrap justify-center text-2xL">
+      <h1 className="flex flex-wrap justify-center text-2xL text-white">
         <div>
           <img
             src="https://cdn.dribbble.com/users/8805637/screenshots/16312153/media/d1dbc1c5e61313fc5c81b65f8540c8e3.gif"
