@@ -133,7 +133,7 @@ const Home = () => {
             renderSuggestion={renderSuggestion}
             inputProps={{
               value: casts1Id,
-              onChange: (e, { newValue }) => setCasts1Id(newValue),
+              onChange: (e, { newValue }) => setCasts1Id(capitalizeFirstLetter(newValue)),
               placeholder: 'Enter 1st Actor',
               className: 'join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200',
             }}
@@ -164,7 +164,7 @@ const Home = () => {
             renderSuggestion={renderSuggestion}
             inputProps={{
               value: casts2Id,
-              onChange: (e, { newValue }) => setCasts2Id(newValue),
+              onChange: (e, { newValue }) => setCasts2Id(capitalizeFirstLetter(newValue)),
               placeholder: 'Enter 2nd Actor',
               className: 'join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200',
             }}
