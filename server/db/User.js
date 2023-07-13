@@ -1,6 +1,6 @@
 // require("dotenv").config();
 const conn = require("./conn");
-const { JSON, STRING, UUID, UUIDV4, TEXT } = conn.Sequelize;
+const { JSON, STRING, UUID, UUIDV4, TEXT, BOOLEAN } = conn.Sequelize;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT = process.env.JWT;
@@ -22,7 +22,22 @@ const User = conn.define("user", {
     validate: {
       notEmpty: true,
     },
-    unique: true,
+    unique: {
+      args: true,
+      msg: "Username Already Exists",
+    },
+  },
+  email: {
+    type: STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      isEmail: true,
+    },
+    unique: {
+      args: true,
+      msg: "Email Already In Use.",
+    },
   },
   password: {
     type: STRING,
@@ -30,6 +45,10 @@ const User = conn.define("user", {
     validate: {
       notEmpty: true,
     },
+  },
+  isAdmin: {
+    type: BOOLEAN,
+    defaultValue: false,
   },
   place: {
     type: JSON,
@@ -115,13 +134,13 @@ User.authenticateGithub = async function (code) {
   if (!user) {
     user = await User.create({
       login,
-      username: `Github-${login}`,
+      username: `${login}`,
       password: `random-${Math.random()}`,
     });
   }
 
   await user.update({
-    username: `Github-${login}`,
+    username: `${login}`,
   });
 
   return user.generateToken();

@@ -6,6 +6,9 @@ import { Clapperboard } from "lucide-react";
 import user from "../store/user";
 import EditAccount from "./EditAccount";
 
+export const DefAvatar =
+  "https://images.assetsdelivery.com/compings_v2/alexutemov/alexutemov1608/alexutemov160800980.jpg";
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state);
@@ -26,9 +29,16 @@ const Navbar = () => {
         <div className="relative">
           <button
             onClick={() => setProfileOpen(!profileOpen)}
-            className="text-white block border-2 border-slate-400 focus:outline-none focus:border-white hover:text-teal-200"
+            className="flex justify-center items-center mx-3 rounded-full text-white block border-2 border-slate-400 focus:outline-none focus:border-white hover:text-teal-200"
           >
-            Welcome {auth.username.replace("Github-", "")}
+            {auth.avatar && (
+              <img
+                src={auth.avatar ? auth.avatar : DefAvatar}
+                alt={auth.username.replace("Github-", "")}
+                className="mx-1 my-1 h-12 w-12 rounded-full"
+              />
+            )}
+            {auth.username}
           </button>
           {profileOpen && (
             <div className="absolute left-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-md z-10 hover:text-white">
