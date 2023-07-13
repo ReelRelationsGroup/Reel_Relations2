@@ -27,12 +27,12 @@ const Carousel = ({ movies }) => {
   };
 
   return (
-    <div className="max-w-[1400px] w-full m-auto py-5 px-4 relative group">
+    <div className=" w-full m-auto py-5 px-4 relative group">
       <div
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/original/${sortedPopularity[currentIdx].poster_path})`,
         }}
-        className="w-full h-80vh md:h-full rounded-2xl bg-center bg-no-repeat bg-contain duration-500"
+        className="w-full h-80vh md:h-full rounded-xl bg-center bg-no-repeat bg-contain duration-500"
       ></div>
       {/* Left Arrow */}
       <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
