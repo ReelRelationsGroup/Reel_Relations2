@@ -80,6 +80,12 @@ const authSlice = createSlice({
     builder.addCase(updateAvatar.fulfilled, (state, action) => {
       return action.payload;
     });
+    builder.addCase(logout, (state, action) => {
+      window.localStorage.removeItem("token");
+      const navigate = useNavigate();
+      navigate("/"); // Redirect to the home page
+      return {};
+    });
   },
 });
 const { logout } = authSlice.actions;

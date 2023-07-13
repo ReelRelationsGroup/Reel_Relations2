@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../store";
 import { Clapperboard } from "lucide-react";
 import user from "../store/user";
@@ -8,6 +8,7 @@ import EditAccount from "./EditAccount";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { auth } = useSelector((state) => state);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -65,7 +66,7 @@ const Navbar = () => {
                 onClick={() => {
                   dispatch(logout());
                   handleMenuOptionClick();
-                  Navigate("/");
+                  navigate("/");
                 }}
                 className="block px-4 py-2 text-gray-800 bg-white hover:bg-indigo-500 hover:text-white"
               >

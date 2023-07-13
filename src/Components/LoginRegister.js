@@ -109,13 +109,13 @@ const LoginRegister = (props) => {
 
   return (
     <div className="flex items-center justify-center w-full h-60px">
-      <div className="loginRegister">
-        <h1 className="text-slate-300 mx-4 text-2xl">Sign in</h1>
-        <h2 className="text-slate-300 mx-4 mt-1 mb-5 text-lg">
+      <div className="border rounded-lg w-full px-15 max-w-xs loginRegister">
+        <h1 className="text-slate-300 mx-4 font-bold text-xl">Sign in</h1>
+        <div className="text-slate-300 mx-4 mt-1 mb-2 text-md">
           to continue to Reel Relations
-        </h2>
+        </div>
         <div className="loginRegisterBox">
-          <h3 className="text-slate-300 mx-4">Returning Users</h3>
+          <h3 className="text-slate-300 mt-3 mx-4">Returning Users</h3>
           <hr className="formDivider" />
           <form onSubmit={login}>
             {auth.error === true && (
@@ -127,40 +127,40 @@ const LoginRegister = (props) => {
             )}
             <div className="inputContainer flex flex-col">
               <input
-                className="placeholder-gray-500 bg-white text-black p-1 mb-4"
+                className="text-sm placeholder-gray-500 bg-white text-black p-1 mb-2"
                 placeholder="username"
                 value={credentials.username}
                 name="username"
                 onChange={onChange}
               />
               <input
-                className="placeholder-gray-500 bg-white text-black p-1 mb-4"
+                className="text-sm placeholder-gray-500 bg-white text-black p-1 mb-2"
                 placeholder="password"
                 type="password"
                 name="password"
                 value={credentials.password}
                 onChange={onChange}
               />
-              <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white">
+              <button className="border-2 ml-5 w-60 inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white">
                 Login
               </button>
             </div>
           </form>
         </div>
-        <div className="loginRegisterBox mt-6">
+        <div className="loginRegisterBox mt-1">
           <h3 className="text-slate-300 mx-4">New Users</h3>
           <hr className="formDivider" />
           <form onSubmit={register}>
             <div className="inputContainer flex flex-col">
               <input
-                className="placeholder-gray-500 bg-white text-black p-1 mb-4"
+                className="text-sm placeholder-gray-500 bg-white text-black p-1 mb-2"
                 placeholder="username"
                 name="username"
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
               />
               <input
-                className="placeholder-gray-500 bg-white text-black p-1 mb-4"
+                className="text-sm placeholder-gray-500 bg-white text-black p-1 mb-2"
                 placeholder="password"
                 type="password"
                 name="password"
@@ -168,32 +168,34 @@ const LoginRegister = (props) => {
                 onChange={(event) => setPassword(event.target.value)}
               />
               <input
-                className="placeholder-gray-500 bg-white text-black p-1 mb-4"
+                className="text-sm placeholder-gray-500 bg-white text-black p-1 mb-2"
                 placeholder="email"
                 type="email"
                 name="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
               />
-              <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white">
+              <button className="border-2 ml-5 w-60 inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white">
                 Register
               </button>
             </div>
           </form>
         </div>
 
-        <div className="flex items-center my-4">
+        <div className="flex items-center my-1">
           <hr className="flex-grow border-t border-gray-300 mr-3" />
-          <span className="text-white my-5">or</span>
+          <span className="text-white">or</span>
           <hr className="flex-grow border-t border-gray-300 ml-3" />
         </div>
-        <div className="flex justify-center mt-6">
+        <div className="ml-9 w-60 flex justify-center mt-6">
           <a
             href={`https://github.com/login/oauth/authorize?client_id=${window.CLIENT_ID}`}
-            className="border border-white rounded flex items-center text-black p-2 min w-96 justify-center"
+            className="border border-2 border-white rounded flex items-center p-2 min w-96 justify-center hover:text-teal-200 hover:border-teal-200"
           >
-            <GithubIcon size={24} className="mr-2 text-white opacity-100" />
-            <span className="text-white opacity-100 ml-3">
+            <span className="text-black mr-2 opacity-100 hover:text-teal-200">
+              <GithubIcon size={24} className="text-white opacity-100" />
+            </span>
+            <span className="text-white opacity-100 ml-3 hover:text-teal-200">
               Continue with Github
             </span>
           </a>

@@ -77,7 +77,6 @@ const EditAccount = () => {
       username,
       email,
       password,
-      avatar,
     };
     navigate("/");
     dispatch(updateUser({ data, id }));
