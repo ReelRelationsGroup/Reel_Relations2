@@ -6,9 +6,6 @@ import { Clapperboard } from "lucide-react";
 import user from "../store/user";
 import EditAccount from "./EditAccount";
 
-export const DefAvatar =
-  "https://images.assetsdelivery.com/compings_v2/alexutemov/alexutemov1608/alexutemov160800980.jpg";
-
 const Navbar = () => {
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state);
@@ -31,14 +28,21 @@ const Navbar = () => {
             onClick={() => setProfileOpen(!profileOpen)}
             className="flex justify-center items-center mx-3 rounded-full text-white block border-2 border-slate-400 focus:outline-none focus:border-white hover:text-teal-200"
           >
-            {auth.avatar && (
+            {/* {auth.avatar && (
               <img
                 src={auth.avatar ? auth.avatar : DefAvatar}
-                alt={auth.username.replace("Github-", "")}
+                alt={auth.username}
                 className="mx-1 my-1 h-12 w-12 rounded-full"
               />
+            )} */}
+            {auth.avatar && (
+              <img
+                className="mx-2 my-2 h-12 w-12 rounded-full"
+                src={auth.avatar}
+                alt={auth.username}
+              />
             )}
-            {auth.username}
+            <span className="mx-1 my-1">{auth.username}</span>
           </button>
           {profileOpen && (
             <div className="absolute left-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-md z-10 hover:text-white">
@@ -61,6 +65,7 @@ const Navbar = () => {
                 onClick={() => {
                   dispatch(logout());
                   handleMenuOptionClick();
+                  Navigate("/");
                 }}
                 className="block px-4 py-2 text-gray-800 bg-white hover:bg-indigo-500 hover:text-white"
               >

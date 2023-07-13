@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { attemptLogin } from "../store";
 import { addUserProfile } from "../store/user.js";
+import {
+  usernameValidator,
+  passwordValidator,
+  emailValidator,
+} from "../utils/util";
 import { GithubIcon } from "lucide-react";
 
 const LoginRegister = (props) => {
@@ -17,6 +22,7 @@ const LoginRegister = (props) => {
   });
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
   const onChange = (ev) => {
@@ -38,14 +44,60 @@ const LoginRegister = (props) => {
 
   const register = async (ev) => {
     ev.preventDefault();
-    await dispatch(addUserProfile({ username, password, permissions: false }));
-    credentials.username = username;
-    credentials.password = password;
-    dispatch(attemptLogin(credentials));
-    setUsername("");
-    setPassword("");
-    handleLoginFromCheckout;
-    navigate("/");
+
+    if (!username || !password || !email) {
+      setError("Username, password, and email are required.");
+      return;
+    }
+
+    if (!usernameValidator(username)) {
+      setError("Must be 3-15 characters long and no special characters");
+      return;
+    }
+
+    if (!passwordValidator(password)) {
+      setError(
+        "Must start with a letter and be 3-15 characters long and no special characters"
+      );
+      return;
+    }
+
+    if (!emailValidator(email)) {
+      setError("Invalid email format.");
+      return;
+    }
+
+    const newUser = {
+      username,
+      password,
+      email,
+      isAdmin: false,
+      place: {},
+      avatar: "",
+    };
+
+    try {
+      await dispatch(addUserProfile(newUser));
+
+      const loginCredentials = {
+        username,
+        password,
+      };
+
+      const response = await dispatch(attemptLogin(loginCredentials));
+
+      if (response.payload.id) {
+        setUsername("");
+        setPassword("");
+        setEmail("");
+        handleLoginFromCheckout();
+        navigate("/");
+      } else if (response.error) {
+        setError(response.payload.message);
+      }
+    } catch (error) {
+      setError("Error occurred during registration.");
+    }
   };
 
   useEffect(() => {
@@ -68,54 +120,62 @@ const LoginRegister = (props) => {
           <form onSubmit={login}>
             {auth.error === true && (
               <div>
-                <p className="text-slate-300 mx-4">
+                <p className="text-orange-300">
                   Invalid Username And/Or Password!
                 </p>
               </div>
             )}
-            <div className="inputContainer">
+            <div className="inputContainer flex flex-col">
               <input
-                className="placeholder-gray-500 bg-white text-black p-1"
+                className="placeholder-gray-500 bg-white text-black p-1 mb-4"
                 placeholder="username"
                 value={credentials.username}
                 name="username"
                 onChange={onChange}
               />
               <input
-                className="placeholder-gray-500 bg-white text-black p-1"
+                className="placeholder-gray-500 bg-white text-black p-1 mb-4"
                 placeholder="password"
                 type="password"
                 name="password"
                 value={credentials.password}
                 onChange={onChange}
               />
-              <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 mx-4 lg:mt-0">
+              <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white">
                 Login
               </button>
             </div>
           </form>
         </div>
-        <div className="loginRegisterBox">
+        <div className="loginRegisterBox mt-6">
           <h3 className="text-slate-300 mx-4">New Users</h3>
           <hr className="formDivider" />
           <form onSubmit={register}>
-            <div className="inputContainer">
+            <div className="inputContainer flex flex-col">
               <input
-                className="placeholder-gray-500 bg-white text-black p-1"
+                className="placeholder-gray-500 bg-white text-black p-1 mb-4"
                 placeholder="username"
                 name="username"
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
               />
               <input
-                className="placeholder-gray-500 bg-white text-black p-1"
+                className="placeholder-gray-500 bg-white text-black p-1 mb-4"
                 placeholder="password"
                 type="password"
                 name="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
               />
-              <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 mx-4 lg:mt-0">
+              <input
+                className="placeholder-gray-500 bg-white text-black p-1 mb-4"
+                placeholder="email"
+                type="email"
+                name="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              <button className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white">
                 Register
               </button>
             </div>
