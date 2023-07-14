@@ -81,8 +81,9 @@ const EditAccount = () => {
       delete data.password;
       dispatch(updateUser({ data, id }));
     }
-    dispatch(logout());
+    //dispatch(logout());
     navigate("/");
+    window.location.reload();
   };
 
   const isEmailValid = emailValidator(email);

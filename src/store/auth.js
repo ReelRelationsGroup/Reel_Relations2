@@ -82,8 +82,8 @@ const authSlice = createSlice({
     });
     builder.addCase(logout, (state, action) => {
       window.localStorage.removeItem("token");
-      const navigate = useNavigate();
-      navigate("/"); // Redirect to the home page
+      // const navigate = useNavigate();
+      // navigate("/"); // Redirect to the home page
       return {};
     });
   },
