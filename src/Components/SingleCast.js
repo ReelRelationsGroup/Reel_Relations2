@@ -17,7 +17,7 @@ import { ChevronsLeft, ChevronsRight } from "lucide-react";
 const SingleCast = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { singleActor, favoriteCasts, auth } = useSelector((state) => state);
+  const { singleActor, favoriteCasts, auth, movies } = useSelector((state) => state);
   const [currentPage, setCurrentPage] = useState(1);
   const moviesPerPage = 15;
   const [expanded, setExpanded] = useState(false);
@@ -43,6 +43,8 @@ const SingleCast = () => {
   useEffect(() => {
     dispatch(fetchActorById(id));
     dispatch(fetchFavoriteCasts());
+    setCurrentPage(1);
+    setExpanded(false);
   }, [dispatch, id]);
 
   // Calculate the current age
@@ -86,19 +88,27 @@ const SingleCast = () => {
     );
   }
 
+  const filteredMovies = singleActor.movie_credits.cast.filter((movie) => movie.popularity > 0);
+  const sortedPopularity =
+    filteredMovies.length < 10
+      ? filteredMovies
+      : filteredMovies
+          .sort((movie1, movie2) => movie2.popularity - movie1.popularity);
+
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-  const currentMovies = singleActor.movie_credits.cast.slice(
+  const currentMovies = sortedPopularity.slice(
     indexOfFirstMovie,
     indexOfLastMovie
   );
 
+  const popularMovies = sortedPopularity.slice(0,10);
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="flex flex-col md:flex-row text-slate-300">
-      <div className="mx-6 w-full md:w-1/2">
-        <h1>{singleActor.name}</h1>
+    <div className="flex p-8 text-slate-300">
+      <div className="mx-6 w-full">
         {auth.username && (
           <span>
             {isActorInFavorites(singleActor.id) ? (
@@ -114,72 +124,107 @@ const SingleCast = () => {
             )}
           </span>
         )}
-        <h1>Current Age: {currentAge} years old</h1>
         <img
-          className="w-52 h-75 rounded-lg my-4"
+          className="w-[300px] h-[450px] min-w-[300px] min-h-[450px] block rounded-lg my-4"
           src={`https://image.tmdb.org/t/p/original${singleActor.profile_path}`}
           alt="Actor Profile"
         />
-        {expanded ? (
-          <p>{singleActor.biography}</p>
-        ) : (
-          <p>{truncatedBiography}</p>
-        )}
-        {showReadMore && (
-          <button
-            className="text-lg font-semibold text-blue-500 hover:underline"
-            onClick={toggleExpand}
-          >
-            {expanded ? (
-              <div className="flex items-center">
-                <ChevronsLeft size={20} />
-                <div>Read Less</div>
-              </div>
-            ) : (
-              <div className="flex items-center">
-                <div>Read More</div>
-                <ChevronsRight size={20} />
-              </div>
-            )}
-          </button>
-        )}
+        <h1>Current Age: {currentAge} years old</h1>
+        <h1>Birthday: {singleActor.birthday} </h1>
+        {singleActor.deathday && <h1>Died: {singleActor.deathday}</h1> }
+        {singleActor.movie_credits.cast && <h1>Known Credits: {singleActor.movie_credits.cast.length}</h1> }
+        {singleActor.place_of_birth && <h1>Place of Birth: {singleActor.place_of_birth}</h1>}
       </div>
-      <div className="w-full md:w-1/2">
-        <Carousel movies={singleActor.movie_credits.cast} />
-        <ul>
-          {currentMovies.map((movie) => (
-            <li key={movie.id}>
-              <Link className="block" to={`/movie/${movie.id}`}>
-                {movie.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <div>
-          {singleActor.movie_credits.cast.length > moviesPerPage && (
-            <ul>
-              {Array.from(
-                Array(
-                  Math.ceil(
-                    singleActor.movie_credits.cast.length / moviesPerPage
-                  )
-                ),
-                (value, index) => (
-                  <li key={index}>
-                    <button
-                      className={`pagination-item ${
-                        currentPage === index + 1 ? "active" : ""
-                      }`}
-                      onClick={() => paginate(index + 1)}
-                    >
-                      {index + 1}
-                    </button>
-                  </li>
-                )
-              )}
-            </ul>
-          )}
-        </div>
+      <div className="w-[calc(100vw - 80px - 300px)] max-w-[920px] pl-[30px]">
+        <h2 className="font-bold text-2xl">{singleActor.name}</h2>
+        <section className="mt-[30px]">
+            <h2 className="mb-[8px] font-bold text-lg">Biography </h2>
+            {expanded ? (
+                <p>{singleActor.biography}</p>
+                ) : (
+                <p>{truncatedBiography}</p>
+                )}
+                {showReadMore && (
+                <button
+                    className="text-lg font-semibold text-blue-500 hover:underline"
+                    onClick={toggleExpand}
+                >
+                    {expanded ? (
+                    <div className="flex items-center">
+                        <ChevronsLeft size={20} />
+                        <div>Read Less</div>
+                    </div>
+                    ) : (
+                    <div className="flex items-center">
+                        <div>Read More</div>
+                        <ChevronsRight size={20} />
+                    </div>
+                    )}
+                </button>
+                )}
+        </section>
+        {/* <section className="mt-[30px] w-full">
+          <h3 className="text-lg font-bold">Known For: </h3>
+          <div className="relative">
+            <ul className="min-h-[221px] w-auto flex overflow-y-hidden overflow-x-scroll">
+                {popularMovies.map((movie) => {
+                    return (
+                        <li key={movie.id} className="w-[130px] mr-4">
+                            <Link to={`/movie/${movie.id}`}>
+                                <img 
+                                    className="w-[130px] h-[195px] object-cover"
+                                    src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} />
+                                <p>{movie.title}</p>
+                            </Link>
+
+                        </li>
+                    )
+                })}
+            </ul>          
+          </div>
+        </section> */}
+        {/*<Carousel movies={singleActor.movie_credits.cast} /> */}
+        <section className="mt-[30px] w-full mb-2">
+            <h3 className="text-lg font-bold">Acting: </h3>
+                <ul className="border border-gray-300 shadow-lg rounded-lg p-2 mb-1">
+                {currentMovies.map((movie) => (
+                    <li key={movie.id} className="my-4">
+                        <Link className="block" to={`/movie/${movie.id}`}>
+                            <span className="mr-1">{movie.release_date.split("-")[0]}</span> {movie.title}
+                        </Link>
+                        {movie.character && 
+                            <div className="pl-2">
+                                <span>as </span>
+                                <span>{movie.character}</span>
+                            </div>
+                        }
+                    </li>
+                ))}
+                </ul>
+            <div>
+                {singleActor.movie_credits.cast.length > moviesPerPage && (
+                    <ul className="flex space-x-2 ">
+                    {Array.from(
+                        Array(Math.ceil(singleActor.movie_credits.cast.length / moviesPerPage)),
+                        (value, index) => (
+                        <li key={index}>
+                            <button
+                            className={`px-2 py-1 rounded-md focus:outline-none ${
+                                currentPage === index + 1
+                                ? "bg-blue-500 text-white"
+                                : "bg-white text-blue-500 hover:bg-blue-100"
+                            }`}
+                            onClick={() => paginate(index + 1)}
+                            >
+                            {index + 1}
+                            </button>
+                        </li>
+                        )
+                    )}
+                    </ul>
+                )}
+            </div>
+        </section>
       </div>
     </div>
   );
