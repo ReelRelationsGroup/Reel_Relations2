@@ -17,7 +17,7 @@ import { ChevronsLeft, ChevronsRight } from "lucide-react";
 const SingleCast = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { singleActor, favoriteCasts, auth } = useSelector((state) => state);
+  const { singleActor, favoriteCasts, auth, movies } = useSelector((state) => state);
   const [currentPage, setCurrentPage] = useState(1);
   const moviesPerPage = 15;
   const [expanded, setExpanded] = useState(false);
@@ -43,6 +43,8 @@ const SingleCast = () => {
   useEffect(() => {
     dispatch(fetchActorById(id));
     dispatch(fetchFavoriteCasts());
+    setCurrentPage(1);
+    setExpanded(false);
   }, [dispatch, id]);
 
   // Calculate the current age
@@ -86,12 +88,21 @@ const SingleCast = () => {
     );
   }
 
+  const filteredMovies = singleActor.movie_credits.cast.filter((movie) => movie.popularity > 0);
+  const sortedPopularity =
+    filteredMovies.length < 10
+      ? filteredMovies
+      : filteredMovies
+          .sort((movie1, movie2) => movie2.popularity - movie1.popularity);
+
   const indexOfLastMovie = currentPage * moviesPerPage;
   const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-  const currentMovies = singleActor.movie_credits.cast.slice(
+  const currentMovies = sortedPopularity.slice(
     indexOfFirstMovie,
     indexOfLastMovie
   );
+
+  const popularMovies = sortedPopularity.slice(0,10);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -119,7 +130,10 @@ const SingleCast = () => {
           alt="Actor Profile"
         />
         <h1>Current Age: {currentAge} years old</h1>
-
+        <h1>Birthday: {singleActor.birthday} </h1>
+        {singleActor.deathday && <h1>Died: {singleActor.deathday}</h1> }
+        {singleActor.movie_credits.cast && <h1>Known Credits: {singleActor.movie_credits.cast.length}</h1> }
+        {singleActor.place_of_birth && <h1>Place of Birth: {singleActor.place_of_birth}</h1>}
       </div>
       <div className="w-[calc(100vw - 80px - 300px)] max-w-[920px] pl-[30px]">
         <h2 className="font-bold text-2xl">{singleActor.name}</h2>
@@ -149,26 +163,47 @@ const SingleCast = () => {
                 </button>
                 )}
         </section>
-        
+        {/* <section className="mt-[30px] w-full">
+          <h3 className="text-lg font-bold">Known For: </h3>
+          <div className="relative">
+            <ul className="min-h-[221px] w-auto flex overflow-y-hidden overflow-x-scroll">
+                {popularMovies.map((movie) => {
+                    return (
+                        <li key={movie.id} className="w-[130px] mr-4">
+                            <Link to={`/movie/${movie.id}`}>
+                                <img 
+                                    className="w-[130px] h-[195px] object-cover"
+                                    src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} />
+                                <p>{movie.title}</p>
+                            </Link>
+
+                        </li>
+                    )
+                })}
+            </ul>          
+          </div>
+        </section> */}
         {/*<Carousel movies={singleActor.movie_credits.cast} /> */}
-        <section className="mt-[30px] mb-2">
+        <section className="mt-[30px] w-full mb-2">
             <h3 className="text-lg font-bold">Acting: </h3>
-                <ul>
+                <ul className="border border-gray-300 shadow-lg rounded-lg p-2 mb-1">
                 {currentMovies.map((movie) => (
                     <li key={movie.id} className="my-4">
-                    <Link className="block" to={`/movie/${movie.id}`}>
-                        {movie.title}
-                    </Link>
-                    <div className="pl-4">
-                        <span>as </span>
-                        <span>{movie.character}</span>
-                    </div>
+                        <Link className="block" to={`/movie/${movie.id}`}>
+                            <span className="mr-1">{movie.release_date.split("-")[0]}</span> {movie.title}
+                        </Link>
+                        {movie.character && 
+                            <div className="pl-2">
+                                <span>as </span>
+                                <span>{movie.character}</span>
+                            </div>
+                        }
                     </li>
                 ))}
                 </ul>
             <div>
                 {singleActor.movie_credits.cast.length > moviesPerPage && (
-                    <ul className="flex space-x-2">
+                    <ul className="flex space-x-2 ">
                     {Array.from(
                         Array(Math.ceil(singleActor.movie_credits.cast.length / moviesPerPage)),
                         (value, index) => (
