@@ -51,6 +51,7 @@ const App = () => {
       <div>
         <h1>{actors.length}</h1>
       </div>
+      <div className="h-20"/>
       <Footer />
     </div>
   );
