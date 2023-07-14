@@ -79,33 +79,29 @@ const LoginRegister = (props) => {
     try {
       await dispatch(addUserProfile(newUser));
 
-      const loginCredentials = {
+      const credentials = {
         username,
         password,
       };
 
-      const response = await dispatch(attemptLogin(loginCredentials));
+      const response = await dispatch(attemptLogin(credentials)).then(
+        (result) => {
+          if (result.payload.id) {
+            setUsername("");
+            setPassword("");
+            setEmail("");
+            handleLoginFromCheckout;
+            navigate("/");
+          } else if (response.error) {
+            setError(response.payload.message);
+          }
+        }
+      );
 
-      if (response.payload.id) {
-        setUsername("");
-        setPassword("");
-        setEmail("");
-        handleLoginFromCheckout();
-        navigate("/");
-      } else if (response.error) {
-        setError(response.payload.message);
-      }
     } catch (error) {
       setError("Error occurred during registration.");
     }
   };
-
-  useEffect(() => {
-    const token = window.localStorage.getItem("token");
-    if (token) {
-      navigate("/");
-    }
-  }, [navigate]);
 
   return (
     <div className="flex items-center justify-center w-full h-60px">
