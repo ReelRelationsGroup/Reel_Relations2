@@ -5,8 +5,8 @@ import { logout, fetchSomeActors, clearSomeActors } from "../store";
 import { SearchIcon, Star } from "lucide-react";
 import { fetchDegreesOfSeparation } from "../utils/api";
 import Spinner from "./Spinner";
-import Autosuggest from 'react-autosuggest';
-import axios from 'axios';
+import Autosuggest from "react-autosuggest";
+import axios from "axios";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,9 @@ const Home = () => {
         if (someActors[j].id === path[i]) {
           if (moviesPath && moviesPath[i]) {
             temp.push(someActors[j]);
-            temp.push(moviesPath[i][Math.floor(Math.random()*moviesPath[i].length)]);
+            temp.push(
+              moviesPath[i][Math.floor(Math.random() * moviesPath[i].length)]
+            );
           } else {
             temp.push(someActors[j]);
           }
@@ -70,8 +72,10 @@ const Home = () => {
     try {
       const { data } = await axios.get("/api/actors");
       const actors = data.map((item) => item.name);
-      const filteredActors = actors.filter((actor) =>
-        typeof actor === "string" && actor.toLowerCase().startsWith(value.toLowerCase())
+      const filteredActors = actors.filter(
+        (actor) =>
+          typeof actor === "string" &&
+          actor.toLowerCase().startsWith(value.toLowerCase())
       );
       const limitedSuggestions = filteredActors.slice(0, 5); // Limit suggestions to 7 items
       return limitedSuggestions;
@@ -83,9 +87,7 @@ const Home = () => {
 
   const renderSuggestion = (suggestion) => {
     return (
-      <div className="p-2 hover:bg-gray-100 cursor-pointer">
-        {suggestion}
-      </div>
+      <div className="p-2 hover:bg-gray-100 cursor-pointer">{suggestion}</div>
     );
   };
 
@@ -98,31 +100,32 @@ const Home = () => {
     setSuggestions([]);
   };
 
- 
-
   return (
     <div className="text-slate-300">
-
-      
-
-        <div className="flex flex-wrap justify-center">
-          <Star />
-            <div className="ml-3 mr-3 mb-4 text-3xl font-bold">
-              Welcome {auth.username} to Reel Relations!!{" "}
-            </div>
-          <Star />
+      <div className="flex flex-wrap justify-center">
+        <Star />
+        <div className="ml-3 mr-3 mb-4 text-3xl font-bold">
+          Welcome {auth.username} to Reel Relations!!{" "}
+        </div>
+        <Star />
       </div>
 
-        <p className="my-6 mx-20 flex flex-wrap justify-center items-center">
-          Discover the Enchanting World of Hollywood & Cinema From Across the
-          Globe & Uncover Why It's All About Who You Know
-       </p>
+      <p className="my-6 mx-20 flex flex-wrap justify-center items-center">
+        Discover the Enchanting World of Hollywood & Cinema From Across the
+        Globe & Uncover Why It's All About Who You Know
+      </p>
 
-          {/* Input fields for casts' (actors') names */}
+      {/* Input fields for casts' (actors') names */}
       <div className="flex flex-wrap justify-center sm:items-center flex-col lg:flex-row">
         <div className="flex justify-center relative">
-          <div className="rounded-l-md btn btn-square join-item px-2 py-2 bg-slate-500" disabled>
-            <SearchIcon size={24} className="text-black border-none rounded-md bg-transparent" />
+          <div
+            className="rounded-l-md btn btn-square join-item px-2 py-2 bg-slate-500"
+            disabled
+          >
+            <SearchIcon
+              size={24}
+              className="text-black border-none rounded-md bg-transparent"
+            />
           </div>
 
           <Autosuggest
@@ -133,15 +136,19 @@ const Home = () => {
             renderSuggestion={renderSuggestion}
             inputProps={{
               value: casts1Id,
-              onChange: (e, { newValue }) => setCasts1Id(capitalizeFirstLetter(newValue)),
-              placeholder: 'Enter 1st Actor',
-              className: 'join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200',
+              onChange: (e, { newValue }) =>
+                setCasts1Id(capitalizeFirstLetter(newValue)),
+              placeholder: "Enter 1st Actor",
+              className:
+                "join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200",
             }}
             theme={{
-              container: 'w-full',
-              input: 'p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-base-200 focus:outline-none',
-              suggestionsContainer: 'absolute z-10 mt-2 w-full rounded-lg shadow-lg',
-              suggestionsList: 'bg-white',
+              container: "w-full",
+              input:
+                "p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-base-200 focus:outline-none",
+              suggestionsContainer:
+                "absolute z-10 mt-2 w-full rounded-lg shadow-lg",
+              suggestionsList: "bg-white",
             }}
           />
         </div>
@@ -150,7 +157,7 @@ const Home = () => {
           <div
             className="rounded-l-md btn btn-square join-item px-2 py-2 bg-slate-500"
             disabled
-            >
+          >
             <SearchIcon
               size={24}
               className="text-black border-none rounded-md bg-transparent"
@@ -164,28 +171,31 @@ const Home = () => {
             renderSuggestion={renderSuggestion}
             inputProps={{
               value: casts2Id,
-              onChange: (e, { newValue }) => setCasts2Id(capitalizeFirstLetter(newValue)),
-              placeholder: 'Enter 2nd Actor',
-              className: 'join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200',
+              onChange: (e, { newValue }) =>
+                setCasts2Id(capitalizeFirstLetter(newValue)),
+              placeholder: "Enter 2nd Actor",
+              className:
+                "join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200",
             }}
             theme={{
-              container: 'w-full',
-              input: 'p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-base-200 focus:outline-none',
-              suggestionsContainer: 'absolute z-10 mt-2 w-full rounded-lg shadow-lg',
-              suggestionsList: 'bg-white',
+              container: "w-full",
+              input:
+                "p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-base-200 focus:outline-none",
+              suggestionsContainer:
+                "absolute z-10 mt-2 w-full rounded-lg shadow-lg",
+              suggestionsList: "bg-white",
             }}
           />
         </div>
-          <button
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-            disabled={casts1Id.trim() === '' || casts2Id.trim() === ''}
-            onClick={findLink}
-          >
-            Find Link
-          </button>
-          
-        </div>
-        <div>
+        <button
+          className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+          disabled={casts1Id.trim() === "" || casts2Id.trim() === ""}
+          onClick={findLink}
+        >
+          Find Link
+        </button>
+      </div>
+      <div>
         {/* Displays the degrees of separation */}
         {loading ? (
           <Spinner />
@@ -197,37 +207,37 @@ const Home = () => {
               </div>
             )}
             <div className="">
-            {flowchart.map((node) => (
-              <div className="flex flex-wrap justify-center">
-                {node.name ? (
-                  <Link
-                    to={`/casts/${node.id}`}
-                    className="font-semibold text-xl"
-                  >
-                    {node.name}
-                  </Link>
-                ) : (
-                  <div>
-                    <p className="flex flex-wrap justify-center my-5 text-md items-center font-normal italic">
-                      {" "}
-                      who was in{" "}
-                    </p>
+              {flowchart.map((node) => (
+                <div className="flex flex-wrap justify-center">
+                  {node.name ? (
                     <Link
-                      to={`/movie/${node.id}`}
+                      to={`/casts/${node.id}`}
                       className="font-semibold text-xl"
                     >
-                      '{node.title}'
+                      {node.name}
                     </Link>
-                    <p className="flex flex-wrap justify-center my-5 text-md items-center font-normal italic">
-                      {" "}
-                      with
-                    </p>
-                  </div>
-                )}
-              </div>
-            ))}
+                  ) : (
+                    <div>
+                      <p className="flex flex-wrap justify-center my-5 text-md items-center font-normal italic">
+                        {" "}
+                        who was in{" "}
+                      </p>
+                      <Link
+                        to={`/movie/${node.id}`}
+                        className="font-semibold text-xl"
+                      >
+                        '{node.title}'
+                      </Link>
+                      <p className="flex flex-wrap justify-center my-5 text-md items-center font-normal italic">
+                        {" "}
+                        with
+                      </p>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
-          </div> 
+          </div>
         )}
       </div>
       <div className="h-20"></div>
