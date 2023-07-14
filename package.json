@@ -34,6 +34,7 @@
     "pg": "^8.8.0",
     "postcss-loader": "^7.3.3",
     "react-autosuggest": "^10.1.0",
+    "react-avatar-edit": "^1.2.0",
     "react-icons": "^4.10.1",
     "sequelize": "^6.25.3",
     "style-loader": "^3.3.3"

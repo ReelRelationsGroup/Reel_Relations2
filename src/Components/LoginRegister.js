@@ -97,7 +97,6 @@ const LoginRegister = (props) => {
           }
         }
       );
-
     } catch (error) {
       setError("Error occurred during registration.");
     }

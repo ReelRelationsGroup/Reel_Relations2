@@ -57,6 +57,7 @@ const Navbar = () => {
               <div>
                 <Link
                   to="/editAccount"
+                  onClick={() => handleMenuOptionClick()}
                   className="block px-4 py-2 text-gray-800 bg-white hover:bg-indigo-500 hover:text-white"
                 >
                   Edit Account
