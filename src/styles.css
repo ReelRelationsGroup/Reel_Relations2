@@ -3,6 +3,7 @@
   scrollbar-width: 2px;
   scrollbar-color: hsl(var(--s)) hsl(var(--p));
   background-color: rgb(30 41 59);
+  box-sizing: border-box;
 }
 
 /* Chrome, Edge, and Safari */

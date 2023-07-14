@@ -165,11 +165,11 @@ const SingleCast = () => {
         </section>
         {/* <section className="mt-[30px] w-full">
           <h3 className="text-lg font-bold">Known For: </h3>
-          <div className="relative">
-            <ul className="min-h-[221px] w-auto flex overflow-y-hidden overflow-x-scroll">
+          <div className="min-h-[221px] overflow-x-scroll">
+            <ul className="flex">
                 {popularMovies.map((movie) => {
                     return (
-                        <li key={movie.id} className="w-[130px] mr-4">
+                        <li key={movie.id} className="w-[130px] mr-4 flex-shrink-0">
                             <Link to={`/movie/${movie.id}`}>
                                 <img 
                                     className="w-[130px] h-[195px] object-cover"
