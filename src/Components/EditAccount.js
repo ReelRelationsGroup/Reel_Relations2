@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateUser } from "../store/user";
-import { logout } from "../store";
+import { logout } from "../store/auth";
 import { useNavigate } from "react-router-dom";
 import {
   emailValidator,
@@ -48,14 +48,15 @@ const EditAccount = () => {
     setEmail(event.target.value);
   };
 
-  const handleAvatarChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      setAvatar(reader.result);
-    };
-    reader.readAsDataURL(file);
-  };
+  // Prof's Profile Avatar Method
+  // const handleAvatarChange = (event) => {
+  //   const file = event.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     setAvatar(reader.result);
+  //   };
+  //   reader.readAsDataURL(file);
+  // };
 
   const handleSaveAvatar = () => {
     setAvatar(preview);
@@ -101,7 +102,7 @@ const EditAccount = () => {
       {auth.avatar && (
         <img
           src={auth.avatar}
-          alt={auth.username.replace("Github-", "")}
+          alt={auth.username}
           className="mx-1 my-1 h-14 w-14 rounded-full"
         />
       )}
@@ -190,7 +191,11 @@ const EditAccount = () => {
             )}
           </div>
           <button
-            disabled={passwordChange && !isPasswordValid}
+            disabled={
+              (passwordChange && !isPasswordValid) ||
+              !isUsernameValid ||
+              !isEmailValid
+            }
             className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-2 mx-4 lg:mt-0"
           >
             Submit
