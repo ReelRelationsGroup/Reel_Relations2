@@ -9,6 +9,7 @@ import {
   usernameValidator,
 } from "../utils/util";
 import Avatar from "react-avatar-edit";
+import { Modal, ModalHeader, ModalActions } from "./Modal";
 
 const EditAccount = () => {
   const { auth } = useSelector((state) => state);
@@ -23,6 +24,7 @@ const EditAccount = () => {
   const [passwordChange, setPasswordChange] = useState(false);
   const [preview, setPreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const onClose = () => {
     setPreview(null);
@@ -48,19 +50,14 @@ const EditAccount = () => {
     setEmail(event.target.value);
   };
 
-  // Prof's Profile Avatar Method
-  // const handleAvatarChange = (event) => {
-  //   const file = event.target.files[0];
-  //   const reader = new FileReader();
-  //   reader.onload = () => {
-  //     setAvatar(reader.result);
-  //   };
-  //   reader.readAsDataURL(file);
-  // };
-
   const handleSaveAvatar = () => {
     setAvatar(preview);
     setPreview(null);
+    closeModal();
+    const updatedAuth = { ...auth, avatar: preview }; // Update the avatar in the auth state
+    dispatch(updateUser({ data: updatedAuth, id: auth.id }));
+    navigate("/");
+    window.location.reload();
   };
 
   const handleSubmit = (event) => {
@@ -97,11 +94,21 @@ const EditAccount = () => {
     }
   }, [auth.id, navigate]);
 
+  const openModal = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center text-slate-300">
       {auth.avatar && (
         <img
-          src={auth.avatar}
+          src={avatar || auth.avatar}
           alt={auth.username}
           className="mx-1 my-1 h-14 w-14 rounded-full"
         />
@@ -110,7 +117,7 @@ const EditAccount = () => {
       <div className="border border-white rounded-lg flex items-center justify-center">
         <form onSubmit={handleSubmit} className="max-w-xs">
           <div className="mb-4">
-            <label>Avatar</label>
+            <label className="mr-3">Avatar</label>
             {selectedFile ? (
               <div>
                 <Avatar
@@ -121,18 +128,21 @@ const EditAccount = () => {
                   src={selectedFile}
                 />
                 <button
-                  className=" text-sm my-2 mx-15 border border-white text-white rounded flex items-center text-black justify-center"
+                  type="button"
+                  className="text-sm my-2 mx-15 border border-white text-white rounded flex items-center text-black justify-center"
                   onClick={handleSaveAvatar}
                 >
                   Set Avatar
                 </button>
               </div>
             ) : (
-              <input
-                type="file"
-                onChange={onSelectFile}
-                className="w-full p-2 border border-gray-300 bg-white text-black text-sm"
-              />
+              <button
+                className="px-4 py-2 leading-none inline-block text-sm hover:text-teal-200 border rounded border-gray-300 my-4 mx-3"
+                type="button"
+                onClick={openModal}
+              >
+                Edit Avatar
+              </button>
             )}
             {preview && <img src={preview} alt="Preview" />}
           </div>
@@ -170,7 +180,7 @@ const EditAccount = () => {
           ) : (
             <div className="flex justify-center">
               <button
-                className="mx-2 border border-white text-white rounded flex items-center text-black min w-96 justify-center mb-2"
+                className="mx-2 border border-gray-300 text-white opacity-100 ml-3 hover:text-teal-200 rounded flex items-center text-black min w-96 justify-center mb-2"
                 onClick={() => setPasswordChange(true)}
               >
                 Change Password
@@ -196,12 +206,43 @@ const EditAccount = () => {
               !isUsernameValid ||
               !isEmailValid
             }
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-2 mx-4 lg:mt-0"
+            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-gray-300 hover:text-teal-200 mt-2 mx-4 lg:mt-0"
           >
             Submit
           </button>
         </form>
       </div>
+      <Modal open={isModalOpen} onClickBackdrop={closeModal}>
+        <div className="my-3 border rounded border-gray-300">
+          <ModalHeader className={"my-2 flex justify-center items-center"}>
+            Edit Avatar
+          </ModalHeader>
+          <div className="hover:text-teal-200 flex justify-center items-center">
+            <Avatar
+              className="hover:text-teal-200 text-white bg-white"
+              width={150}
+              height={150}
+              onCrop={onCrop}
+              onClose={onClose}
+              src={selectedFile}
+            />
+          </div>
+          <ModalActions className={"flex justify-center items-center"}>
+            <button
+              className="px-4 py-2 leading-none inline-block text-sm hover:text-teal-200 border rounded border-gray-300 my-4 ml-3"
+              onClick={handleSaveAvatar}
+            >
+              Set Avatar
+            </button>
+            <button
+              className="px-4 py-2 leading-none inline-block text-sm hover:text-teal-200 border rounded border-gray-300 my-4 mx-3"
+              onClick={closeModal}
+            >
+              Cancel
+            </button>
+          </ModalActions>
+        </div>
+      </Modal>
     </div>
   );
 };
