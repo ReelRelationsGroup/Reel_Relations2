@@ -54,7 +54,7 @@ const fetchMovieDetails = async (movieId) => {
 const syncAndSeed = async () => {
   await conn.sync({ force: false });
 
-  const totalPages = 50;
+  const totalPages = 1;
 
   try {
     for (let page = 1; page < totalPages; page++) {
