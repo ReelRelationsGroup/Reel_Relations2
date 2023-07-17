@@ -66,16 +66,7 @@ const SingleCast = () => {
   if (!singleActor || !singleActor.movie_credits) {
     return (
       <>
-        <Spinner />{" "}
-        {/* Display the Spinner component when the data is loading */}
         <h1 className="flex flex-wrap justify-center text-2xL">
-          <div className="flex justify-center items-center">
-            <img
-              className="max-w-sm"
-              src="https://cdn.dribbble.com/users/2882885/screenshots/7861928/media/a4c4da396c3da907e7ed9dd0b55e5031.gif"
-              alt="Loading..."
-            />
-          </div>
           You're Lost Buddy - Actor Page Not Found
         </h1>
         <NavLink

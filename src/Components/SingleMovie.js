@@ -50,7 +50,17 @@ const SingleMovie = () => {
   const runtimeMinutes = singleMovie.runtime % 60;
 
   return !singleMovie?.title ? (
-    <Spinner />
+    <>
+      <h1 className="flex flex-wrap justify-center text-2xL">
+        You're Lost Buddy - Movie Page Not Found
+      </h1>
+      <NavLink
+        className="flex flex-wrap justify-center inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
+        to={"/"}
+      >
+        Return Back Home
+      </NavLink>
+    </>
   ) : (
     <section className="mx-6 flex flex-col md:flex-row text-slate-300">
       <div className="w-full md:w-1/3">
