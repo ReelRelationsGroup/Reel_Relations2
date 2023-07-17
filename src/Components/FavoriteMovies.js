@@ -11,26 +11,28 @@ const FavoriteMovies = () => {
     dispatch(fetchFavoriteMovies());
   }, [dispatch]);
 
+  // Conditional check: Display only if favoriteMovies are loaded
+  if (!favoriteMovies || favoriteMovies.length === 0) {
+    return null; // or show a loading indicator
+  }
+
   return (
     <div className="w-full">
       <ul className="flex flex-wrap">
-        {favoriteMovies &&
-          favoriteMovies.map((movie) => (
-            <li key={movie.id} className="m-5 m">
-              <Link to={`/movie/${movie.movie.id}`}>
-                <img
-                  className="w-52 h-75 rounded-lg my-4"
-                  src={`https://image.tmdb.org/t/p/original${movie.movie.poster_path}`}
-                  alt="Actor Profile"
-                />
-                <span className="truncate block max-w-xs text-center">
-                  {" "}
-                  {/* Add text-center class */}
-                  {movie.movie.title}
-                </span>
-              </Link>
-            </li>
-          ))}
+        {favoriteMovies.map((movie) => (
+          <li key={movie.id} className="m-5 m">
+            <Link to={`/movie/${movie.movie.id}`}>
+              <img
+                className="w-52 h-75 rounded-lg my-4"
+                src={`https://image.tmdb.org/t/p/original${movie.movie.poster_path}`}
+                alt="Actor Profile"
+              />
+              <span className="truncate block max-w-xs text-center">
+                {movie.movie.title}
+              </span>
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   );

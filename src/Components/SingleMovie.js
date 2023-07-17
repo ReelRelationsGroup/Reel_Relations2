@@ -8,6 +8,7 @@ import {
   deleteFavoriteMovie,
   fetchFavoriteMovies,
   fetchMovieById,
+  fetchMovies,
 } from "../store";
 import { useParams, NavLink } from "react-router-dom";
 import Spinner from "./Spinner";
@@ -15,17 +16,29 @@ import Spinner from "./Spinner";
 const SingleMovie = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { singleMovie, favoriteMovies, auth } = useSelector((state) => state);
+  const { singleMovie, favoriteMovies, auth, movies } = useSelector((state) => state);
 
   const isMovieInFavorites = (movieId) => {
-    if (favoriteMovies.length === 0) {
+    console.log('favoriteMovies:', favoriteMovies);
+    console.log('movieId:', movieId);
+  
+    if (!favoriteMovies || favoriteMovies.length === 0) {
       return false;
     }
-
-    return favoriteMovies.some((movie) => {
+  
+    const isFavorite = favoriteMovies.some((movie) => {
+      console.log(movie);
+      console.log(movie.movieId === movieId);
       return movie.movieId === movieId;
     });
+  
+    console.log('isFavorite:', isFavorite);
+    return isFavorite;
   };
+  
+  const isSingleInDb = (movieId) => {
+    return movies.some((movie) => movie.id === movieId);
+  }
 
   const handleToggleFavorite = (movieId) => {
     if (isMovieInFavorites(movieId)) {
@@ -33,12 +46,13 @@ const SingleMovie = () => {
     } else {
       dispatch(addFavoriteMovie(movieId));
     }
-    // dispatch(fetchFavoriteMovies());
+    dispatch(fetchFavoriteMovies());
   };
 
   useEffect(() => {
     dispatch(fetchMovieById(id));
     dispatch(fetchFavoriteMovies());
+    dispatch(fetchMovies());
   }, [dispatch, id]);
 
   const releaseYear = new Date(singleMovie?.release_date).getFullYear();
@@ -73,7 +87,7 @@ const SingleMovie = () => {
       <div className="w-full md:w-2/3 px-4 my-4">
         <h1 className="font-semibold text-3xl">
           {singleMovie.title} ({releaseYear}){" "}
-          {auth.username && (
+          {auth.username && isSingleInDb(singleMovie.id) && (
             <span>
               {isMovieInFavorites(singleMovie.id) ? (
                 <FontAwesomeIcon
