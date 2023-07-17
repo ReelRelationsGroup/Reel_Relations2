@@ -10,6 +10,8 @@ import {
 } from "../utils/util";
 import Avatar from "react-avatar-edit";
 import { Modal, ModalHeader, ModalActions } from "./ui/Modal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EditAccount = () => {
   const { auth } = useSelector((state) => state);
@@ -40,24 +42,26 @@ const EditAccount = () => {
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
+    // toast.success("Username updated successfully!"); // Show success toast
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+    // toast.success("Password updated successfully!"); // Show success toast
   };
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
+    // toast.success("Email updated successfully!"); // Show success toast
   };
 
   const handleSaveAvatar = () => {
     setAvatar(preview);
     setPreview(null);
     closeModal();
-    const updatedAuth = { ...auth, avatar: preview }; // Update the avatar in the auth state
+    const updatedAuth = { ...auth, avatar: preview };
     dispatch(updateUser({ data: updatedAuth, id: auth.id }));
-    navigate("/");
-    window.location.reload();
+    toast.success("Avatar updated successfully!"); // Show success toast
   };
 
   const handleSubmit = (event) => {
@@ -75,13 +79,12 @@ const EditAccount = () => {
     };
     if (passwordChange) {
       dispatch(updateUser({ data, id }));
+      toast.success("Password updated successfully!"); // Show success toast
     } else {
       delete data.password;
       dispatch(updateUser({ data, id }));
+      toast.success("Account info updated successfully!"); // Show success toast
     }
-    //dispatch(logout());
-    navigate("/");
-    window.location.reload();
   };
 
   const isEmailValid = emailValidator(email);
@@ -243,6 +246,7 @@ const EditAccount = () => {
           </ModalActions>
         </div>
       </Modal>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 };
