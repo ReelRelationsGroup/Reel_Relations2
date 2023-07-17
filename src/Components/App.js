@@ -48,9 +48,6 @@ const App = () => {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
-      <div>
-        <h1>{actors.length}</h1>
-      </div>
       <div className="h-20"/>
       <Footer />
     </div>
