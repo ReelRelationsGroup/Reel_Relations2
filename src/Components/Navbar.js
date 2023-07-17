@@ -29,13 +29,6 @@ const Navbar = () => {
             onClick={() => setProfileOpen(!profileOpen)}
             className="flex justify-center items-center mx-3 rounded-full text-white block border-2 border-slate-400 focus:outline-none focus:border-white hover:text-teal-200"
           >
-            {/* {auth.avatar && (
-              <img
-                src={auth.avatar ? auth.avatar : DefAvatar}
-                alt={auth.username}
-                className="mx-1 my-1 h-12 w-12 rounded-full"
-              />
-            )} */}
             {auth.avatar && (
               <img
                 className="mx-2 my-2 h-12 w-12 rounded-full"
@@ -46,7 +39,7 @@ const Navbar = () => {
             <span className="mx-1 my-1">{auth.username}</span>
           </button>
           {profileOpen && (
-            <div className="absolute left-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-md z-10 hover:text-white">
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg py-2 shadow-md z-10 hover:text-white">
               <Link
                 to="/favorites"
                 onClick={() => handleMenuOptionClick()}
@@ -113,7 +106,6 @@ const Navbar = () => {
           </svg>
         </button>
       </div>
-      <div></div>
       <div
         className={`${
           isMenuOpen ? "block" : "hidden"
@@ -145,7 +137,7 @@ const Navbar = () => {
             Single Movie
           </Link>
         </div>
-        {renderAuthButtons()}
+        <div className="lg:ml-auto">{renderAuthButtons()}</div>
       </div>
     </nav>
   );

@@ -126,7 +126,7 @@ const SingleCast = () => {
         {singleActor.movie_credits.cast && <h1>Known Credits: {singleActor.movie_credits.cast.length}</h1> }
         {singleActor.place_of_birth && <h1>Place of Birth: {singleActor.place_of_birth}</h1>}
       </div>
-      <div className="w-[calc(100vw - 80px - 300px)] max-w-[920px] pl-[30px]">
+      <div className="w-[calc(100vw - 80px - 300px)] max-w-[920px] pl-[30px] overflow-x-hidden">
         <h2 className="font-bold text-2xl">{singleActor.name}</h2>
         <section className="mt-[30px]">
             <h2 className="mb-[8px] font-bold text-lg">Biography </h2>
@@ -154,7 +154,7 @@ const SingleCast = () => {
                 </button>
                 )}
         </section>
-        {/* <section className="mt-[30px] w-full">
+        <section className="mt-[30px] overflow-x-hidden">
           <h3 className="text-lg font-bold">Known For: </h3>
           <div className="min-h-[221px] overflow-x-scroll">
             <ul className="flex">
@@ -165,7 +165,7 @@ const SingleCast = () => {
                                 <img 
                                     className="w-[130px] h-[195px] object-cover"
                                     src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} />
-                                <p>{movie.title}</p>
+                                <p className="text-center">{movie.title}</p>
                             </Link>
 
                         </li>
@@ -173,8 +173,7 @@ const SingleCast = () => {
                 })}
             </ul>          
           </div>
-        </section> */}
-        {/*<Carousel movies={singleActor.movie_credits.cast} /> */}
+        </section>
         <section className="mt-[30px] w-full mb-2">
             <h3 className="text-lg font-bold">Acting: </h3>
                 <ul className="border border-gray-300 shadow-lg rounded-lg p-2 mb-1">
