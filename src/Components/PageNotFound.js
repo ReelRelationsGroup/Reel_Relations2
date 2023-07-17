@@ -20,7 +20,7 @@ export const PageNotFound = () => {
       </h1>
       <div className="flex items-center justify-center">
         <NavLink
-          className="w-96 flex items-center justify-center text-md px-4 py-2 border rounded text-white border-white hover:text-teal-500 mt-4"
+          className="w-96 flex items-center justify-center text-md px-4 py-2 border rounded text-white border-white hover:border-teal-500 hover:text-teal-500 mt-4"
           to={"/"}
         >
           Return Back Home

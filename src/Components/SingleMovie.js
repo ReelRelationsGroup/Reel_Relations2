@@ -11,6 +11,8 @@ import {
 } from "../store";
 import { useParams, NavLink } from "react-router-dom";
 import Spinner from "./Spinner";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SingleMovie = () => {
   const dispatch = useDispatch();
@@ -30,8 +32,10 @@ const SingleMovie = () => {
   const handleToggleFavorite = (movieId) => {
     if (isMovieInFavorites(movieId)) {
       dispatch(deleteFavoriteMovie(movieId));
+      toast.success("Movie removed from favorites."); // Show success toast when movie is removed
     } else {
       dispatch(addFavoriteMovie(movieId));
+      toast.success("Movie added to favorites."); // Show success toast when movie is added
     }
     // dispatch(fetchFavoriteMovies());
   };
@@ -50,17 +54,30 @@ const SingleMovie = () => {
   const runtimeMinutes = singleMovie.runtime % 60;
 
   return !singleMovie?.title ? (
-    <>
-      <h1 className="flex flex-wrap justify-center text-2xL">
-        You're Lost Buddy - Movie Page Not Found
+    <div className="flex flex-col items-center justify-start h-screen">
+      <h1 className="flex flex-col items-center justify-start">
+        <div className="text-white text-2xl font-bold my-2 text-center">
+          <div className="flex justify-center">
+            <img
+              src="https://cdn.dribbble.com/users/8805637/screenshots/16312153/media/d1dbc1c5e61313fc5c81b65f8540c8e3.gif"
+              alt="Animated GIF"
+              className="w-3/5"
+            />
+          </div>
+        </div>
+        <div className="text-white text-2xl font-bold my-2 text-center">
+          You're Lost Buddy - Movie Page Not Found
+        </div>
       </h1>
-      <NavLink
-        className="flex flex-wrap justify-center inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-        to={"/"}
-      >
-        Return Back Home
-      </NavLink>
-    </>
+      <div className="flex items-center justify-center">
+        <NavLink
+          className="w-96 flex items-center justify-center text-md px-4 py-2 border rounded text-white border-white hover:border-teal-500 hover:text-teal-500 mt-4"
+          to={"/"}
+        >
+          Return Back Home
+        </NavLink>
+      </div>
+    </div>
   ) : (
     <section className="mx-6 flex flex-col md:flex-row text-slate-300">
       <div className="w-full md:w-1/3">
@@ -96,6 +113,7 @@ const SingleMovie = () => {
         <h2 className="text-xl font-extrabold my-5">Overview</h2>
         <p>{singleMovie.overview}</p>
       </div>
+      <ToastContainer position="bottom-right" />{" "}
     </section>
   );
 };
