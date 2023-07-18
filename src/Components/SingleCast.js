@@ -97,6 +97,8 @@ const SingleCast = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  console.log(singleActor)
+
   return (
     <div className="flex p-8 text-slate-300">
       <div className="mx-6 w-full">
