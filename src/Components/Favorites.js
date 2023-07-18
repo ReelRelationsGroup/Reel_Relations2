@@ -10,8 +10,8 @@ const Favorites = () => {
   };
 
   return (
-    <div className="flex md:flex-row text-slate-300">
-      <div className="mx-6 w-full md:w-1/2">
+    <div className="flex w-full text-slate-300">
+      <div className="mx-6 w-full">
         <h1 className="text-2xl my-4">Your Favorites</h1>
         <div className="text-lg flex border-slate-400">
           <h2

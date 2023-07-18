@@ -135,7 +135,7 @@ const SingleMovie = () => {
   ) : (
     <div className="flex p-8 text-slate-300">
       <div className="mx-6 w-[300px]">
-        {auth.username && (
+        {/* {auth.username && (
           <span>
             {isMovieInFavorites(singleMovie.id) ? (
               <FontAwesomeIcon
@@ -149,7 +149,7 @@ const SingleMovie = () => {
               />
             )}
           </span>
-        )}
+        )} */}
         <img
           className="w-full h-[450px] min-w-[300px] min-h-[450px] block rounded-lg my-4"
           src={`https://image.tmdb.org/t/p/original${singleMovie.poster_path}`}
@@ -207,9 +207,8 @@ const SingleMovie = () => {
           </div>
         </section>
       </div>
-    </div>
       <ToastContainer position="bottom-right" />{" "}
-    </section>
+    </div>
   );
 };
 

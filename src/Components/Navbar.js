@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchActors, logout } from "../store";
+import { fetchActors, fetchMovies, logout } from "../store";
 import { Clapperboard } from "lucide-react";
 import user from "../store/user";
 import EditAccount from "./EditAccount";
@@ -9,7 +9,7 @@ import EditAccount from "./EditAccount";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { auth, actors } = useSelector((state) => state);
+  const { auth, actors, movies } = useSelector((state) => state);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
@@ -19,6 +19,7 @@ const Navbar = () => {
 
   useEffect(() => {
     dispatch(fetchActors());
+    dispatch(fetchMovies());
   },[dispatch])
 
   const renderAuthButtons = () => {
@@ -105,6 +106,23 @@ const Navbar = () => {
     return randomActor.id;
   };
 
+  const getRandomMovie = () => {
+    if (!movies || movies.length === 0) {
+      return "";
+    }
+  
+    // Filter actors with a non-empty profile path
+    const filteredMovies = movies.filter(movie => movie.poster_path);
+  
+    if (filteredMovies.length === 0) {
+      return "";
+    }
+  
+    const randomIndex = Math.floor(Math.random() * filteredMovies.length);
+    const randomMovie = filteredMovies[randomIndex];
+    return randomMovie.id;
+  };
+
   return (
     <nav className="flex items-center justify-between flex-wrap p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -152,10 +170,10 @@ const Navbar = () => {
             Random Actor
           </Link>
           <Link
-            to="/movie/10196"
+            to={`/movie/${getRandomMovie()}`}
             className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
           >
-            Single Movie
+            Random Movie
           </Link>
         </div>
         <div className="lg:ml-auto">{renderAuthButtons()}</div>

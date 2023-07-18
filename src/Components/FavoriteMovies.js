@@ -20,15 +20,15 @@ const FavoriteMovies = () => {
     <div className="w-full">
       <ul className="flex flex-wrap">
         {favoriteMovies.map((movie) => (
-          <li key={movie.id} className="m-5 m">
-            <Link to={`/movie/${movie.movie.id}`}>
+          <li key={movie.id} className="m-5 max-w-sm">
+            <Link to={`/movie/${movie.movie?.id}`}>
               <img
                 className="w-52 h-75 rounded-lg my-4"
-                src={`https://image.tmdb.org/t/p/original${movie.movie.poster_path}`}
+                src={`https://image.tmdb.org/t/p/original${movie.movie?.poster_path}`}
                 alt="Actor Profile"
               />
               <span className="truncate block max-w-xs text-center">
-                {movie.movie.title}
+                {movie.movie?.title}
               </span>
             </Link>
           </li>
