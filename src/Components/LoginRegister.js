@@ -51,13 +51,13 @@ const LoginRegister = (props) => {
     }
 
     if (!usernameValidator(username)) {
-      setError("Must be 3-15 characters long and no special characters");
+      setError("Must Contain 2-15 Alphanumeric Characters or Underscores");
       return;
     }
 
     if (!passwordValidator(password)) {
       setError(
-        "Must start with a letter and be 3-15 characters long and no special characters"
+        "Must Start w/Letter & Contain 2-14 Alphanumeric Characters or Underscores"
       );
       return;
     }

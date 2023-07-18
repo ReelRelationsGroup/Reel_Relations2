@@ -157,6 +157,11 @@ const EditAccount = () => {
               value={username}
               onChange={handleUsernameChange}
             />
+            {!isUsernameValid && (
+              <div className="error-message text-orange-300">
+                Must Contain 2-15 Alphanumeric Characters or Underscores
+              </div>
+            )}
           </div>
           {passwordChange ? (
             <div className="mb-4">
@@ -168,6 +173,13 @@ const EditAccount = () => {
                 value={password}
                 onChange={handlePasswordChange}
               />
+              {!isPasswordValid && (
+                <div className="error-message text-orange-300">
+                  Must Start w/Letter & Contain 2-14 Alphanumeric Characters or
+                  Underscores
+                </div>
+              )}
+
               <div className="flex justify-center">
                 <button
                   className="mt-4 border hover:text-teal-200 hover:border-teal-200 border-gray-300 text-white rounded flex items-center text-black min w-96 justify-center"
@@ -200,7 +212,9 @@ const EditAccount = () => {
               className="w-full p-2 border border-gray-300 bg-white text-black"
             />
             {!isEmailValid && (
-              <div className="error-message">Invalid Email Format</div>
+              <div className="error-message text-orange-300">
+                Invalid Email Format
+              </div>
             )}
           </div>
           <button
