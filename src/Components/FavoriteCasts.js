@@ -11,6 +11,11 @@ const FavoriteCasts = () => {
     dispatch(fetchFavoriteCasts());
   }, [dispatch]);
 
+
+  if(!favoriteCasts){
+    return null;
+  }
+
   return (
     <div>
       <ul className="flex flex-wrap">
@@ -20,13 +25,13 @@ const FavoriteCasts = () => {
               <Link to={`/casts/${cast.actorId}`}>
                 <img
                   className="w-52 h-75 rounded-lg my-4"
-                  src={`https://image.tmdb.org/t/p/original${cast.cast.profile_path}`}
+                  src={`https://image.tmdb.org/t/p/original${cast.cast?.profile_path}`}
                   alt="Actor Profile"
                 />
                 <span className="truncate block max-w-xs text-center">
                   {" "}
                   {/* Add text-center class */}
-                  {cast.cast.name}
+                  {cast.cast?.name}
                 </span>
               </Link>
             </li>
