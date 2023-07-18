@@ -99,7 +99,7 @@ const SingleCast = () => {
 
   return (
     <div className="flex p-8 text-slate-300">
-      <div className="mx-6 w-full">
+      <div className="mx-6">
         {auth.username && (
           <span>
             {isActorInFavorites(singleActor.id) ? (
@@ -126,7 +126,7 @@ const SingleCast = () => {
         {singleActor.movie_credits.cast && <h1>Known Credits: {singleActor.movie_credits.cast.length}</h1> }
         {singleActor.place_of_birth && <h1>Place of Birth: {singleActor.place_of_birth}</h1>}
       </div>
-      <div className="w-[calc(100vw - 80px - 300px)] max-w-[920px] pl-[30px] overflow-x-hidden">
+      <div className="w-full pl-[30px] overflow-x-hidden">
         <h2 className="font-bold text-2xl">{singleActor.name}</h2>
         <section className="mt-[30px]">
             <h2 className="mb-[8px] font-bold text-lg">Biography </h2>
