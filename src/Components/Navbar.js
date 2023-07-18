@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../store";
+import { fetchActors, logout } from "../store";
 import { Clapperboard } from "lucide-react";
 import user from "../store/user";
 import EditAccount from "./EditAccount";
@@ -9,13 +9,17 @@ import EditAccount from "./EditAccount";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { auth } = useSelector((state) => state);
+  const { auth, actors } = useSelector((state) => state);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    dispatch(fetchActors());
+  },[dispatch])
 
   const renderAuthButtons = () => {
     const handleMenuOptionClick = () => {
@@ -27,7 +31,7 @@ const Navbar = () => {
         <div className="relative">
           <button
             onClick={() => setProfileOpen(!profileOpen)}
-            className="flex justify-center items-center mx-3 rounded-full text-white block border-2 border-slate-400 focus:outline-none focus:border-white hover:text-teal-200"
+            className="flex justify-center items-center mx-3 rounded-full text-white block border-2 border-slate-400 focus:outline-none focus:border-white hover:text-teal-200 hover:border-teal-200"
           >
             {auth.avatar && (
               <img
@@ -84,6 +88,23 @@ const Navbar = () => {
     }
   };
 
+  const getRandomActor = () => {
+    if (!actors || actors.length === 0) {
+      return "";
+    }
+  
+    // Filter actors with a non-empty profile path
+    const filteredActors = actors.filter(actor => actor.profile_path);
+  
+    if (filteredActors.length === 0) {
+      return "";
+    }
+  
+    const randomIndex = Math.floor(Math.random() * filteredActors.length);
+    const randomActor = filteredActors[randomIndex];
+    return randomActor.id;
+  };
+
   return (
     <nav className="flex items-center justify-between flex-wrap p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -125,10 +146,10 @@ const Navbar = () => {
             About
           </Link>
           <Link
-            to="/casts/85"
+            to={`/casts/${getRandomActor()}`}
             className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
           >
-            Single Actor
+            Random Actor
           </Link>
           <Link
             to="/movie/10196"

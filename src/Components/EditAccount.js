@@ -9,7 +9,9 @@ import {
   usernameValidator,
 } from "../utils/util";
 import Avatar from "react-avatar-edit";
-import { Modal, ModalHeader, ModalActions } from "./Modal";
+import { Modal, ModalHeader, ModalActions } from "./ui/Modal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EditAccount = () => {
   const { auth } = useSelector((state) => state);
@@ -40,24 +42,26 @@ const EditAccount = () => {
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
+    // toast.success("Username updated successfully!"); // Show success toast
   };
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+    // toast.success("Password updated successfully!"); // Show success toast
   };
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
+    // toast.success("Email updated successfully!"); // Show success toast
   };
 
   const handleSaveAvatar = () => {
     setAvatar(preview);
     setPreview(null);
     closeModal();
-    const updatedAuth = { ...auth, avatar: preview }; // Update the avatar in the auth state
+    const updatedAuth = { ...auth, avatar: preview };
     dispatch(updateUser({ data: updatedAuth, id: auth.id }));
-    navigate("/");
-    window.location.reload();
+    toast.success("Avatar updated successfully!"); // Show success toast
   };
 
   const handleSubmit = (event) => {
@@ -75,13 +79,12 @@ const EditAccount = () => {
     };
     if (passwordChange) {
       dispatch(updateUser({ data, id }));
+      toast.success("Password updated successfully!"); // Show success toast
     } else {
       delete data.password;
       dispatch(updateUser({ data, id }));
+      toast.success("Account info updated successfully!"); // Show success toast
     }
-    //dispatch(logout());
-    navigate("/");
-    window.location.reload();
   };
 
   const isEmailValid = emailValidator(email);
@@ -137,7 +140,7 @@ const EditAccount = () => {
               </div>
             ) : (
               <button
-                className="px-4 py-2 leading-none inline-block text-sm hover:text-teal-200 border rounded border-gray-300 my-4 mx-3"
+                className="px-4 py-2 leading-none inline-block text-sm hover:border-teal-200 hover:text-teal-200 border rounded border-gray-300 my-4 mx-3"
                 type="button"
                 onClick={openModal}
               >
@@ -167,7 +170,7 @@ const EditAccount = () => {
               />
               <div className="flex justify-center">
                 <button
-                  className="mt-4 border border-white text-white rounded flex items-center text-black min w-96 justify-center"
+                  className="mt-4 border hover:text-teal-200 hover:border-teal-200 border-gray-300 text-white rounded flex items-center text-black min w-96 justify-center"
                   onClick={() => {
                     setPasswordChange(false);
                     setPassword("");
@@ -180,7 +183,7 @@ const EditAccount = () => {
           ) : (
             <div className="flex justify-center">
               <button
-                className="mx-2 border border-gray-300 text-white opacity-100 ml-3 hover:text-teal-200 rounded flex items-center text-black min w-96 justify-center mb-2"
+                className="mx-2 border border-gray-300 text-white opacity-100 ml-3 hover:border-teal-200 hover:text-teal-200 rounded flex items-center text-black min w-96 justify-center mb-2"
                 onClick={() => setPasswordChange(true)}
               >
                 Change Password
@@ -206,14 +209,14 @@ const EditAccount = () => {
               !isUsernameValid ||
               !isEmailValid
             }
-            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-gray-300 hover:text-teal-200 mt-2 mx-4 lg:mt-0"
+            className="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-gray-300 hover:border-teal-200 hover:text-teal-200 mt-2 mx-4 lg:mt-0"
           >
             Submit
           </button>
         </form>
       </div>
       <Modal open={isModalOpen} onClickBackdrop={closeModal}>
-        <div className="my-3 border rounded border-gray-300">
+        <div className="my-3 border rounded hover:border-teal-200 border-gray-300">
           <ModalHeader className={"my-2 flex justify-center items-center"}>
             Edit Avatar
           </ModalHeader>
@@ -229,13 +232,13 @@ const EditAccount = () => {
           </div>
           <ModalActions className={"flex justify-center items-center"}>
             <button
-              className="px-4 py-2 leading-none inline-block text-sm hover:text-teal-200 border rounded border-gray-300 my-4 ml-3"
+              className="px-4 py-2 leading-none inline-block text-sm hover:border-teal-200 hover:text-teal-200 border rounded border-gray-300 my-4 ml-3"
               onClick={handleSaveAvatar}
             >
               Set Avatar
             </button>
             <button
-              className="px-4 py-2 leading-none inline-block text-sm hover:text-teal-200 border rounded border-gray-300 my-4 mx-3"
+              className="px-4 py-2 leading-none inline-block text-sm hover:border-teal-200 hover:text-teal-200 border rounded border-gray-300 my-4 mx-3"
               onClick={closeModal}
             >
               Cancel
@@ -243,6 +246,7 @@ const EditAccount = () => {
           </ModalActions>
         </div>
       </Modal>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 };

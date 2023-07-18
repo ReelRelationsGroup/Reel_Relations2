@@ -10,9 +10,12 @@ import {
   deleteFavoriteMovie,
   fetchFavoriteMovies,
   fetchMovieById,
+  fetchMovies,
 } from "../store";
 import { useParams, NavLink, Link } from "react-router-dom";
 import Spinner from "./Spinner";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Star Rating component
 const StarRating = ({ rating }) => {
@@ -34,32 +37,48 @@ const StarRating = ({ rating }) => {
 const SingleMovie = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { singleMovie, favoriteMovies, auth } = useSelector((state) => state);
+  const { singleMovie, favoriteMovies, auth, movies } = useSelector((state) => state);
   const [currentPage, setCurrentPage] = useState(1);
   const actorsPerPage = 15;
 
+
   const isMovieInFavorites = (movieId) => {
-    if (favoriteMovies.length === 0) {
+    console.log('favoriteMovies:', favoriteMovies);
+    console.log('movieId:', movieId);
+  
+    if (!favoriteMovies || favoriteMovies.length === 0) {
       return false;
     }
-
-    return favoriteMovies.some((movie) => {
+  
+    const isFavorite = favoriteMovies.some((movie) => {
+      console.log(movie);
+      console.log(movie.movieId === movieId);
       return movie.movieId === movieId;
     });
+  
+    console.log('isFavorite:', isFavorite);
+    return isFavorite;
   };
+  
+  const isSingleInDb = (movieId) => {
+    return movies.some((movie) => movie.id === movieId);
+  }
 
   const handleToggleFavorite = (movieId) => {
     if (isMovieInFavorites(movieId)) {
       dispatch(deleteFavoriteMovie(movieId));
+      toast.success("Movie removed from favorites."); // Show success toast when movie is removed
     } else {
       dispatch(addFavoriteMovie(movieId));
+      toast.success("Movie added to favorites."); // Show success toast when movie is added
     }
-    // dispatch(fetchFavoriteMovies());
+    dispatch(fetchFavoriteMovies());
   };
 
   useEffect(() => {
     dispatch(fetchMovieById(id));
     dispatch(fetchFavoriteMovies());
+    dispatch(fetchMovies());
   }, [dispatch, id]);
 
   const releaseYear = new Date(singleMovie?.release_date).getFullYear();
@@ -89,17 +108,30 @@ const SingleMovie = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return !singleMovie?.title ? (
-    <>
-      <h1 className="flex flex-wrap justify-center text-2xL">
-        You're Lost Buddy - Movie Page Not Found
+    <div className="flex flex-col items-center justify-start h-screen">
+      <h1 className="flex flex-col items-center justify-start">
+        <div className="text-white text-2xl font-bold my-2 text-center">
+          <div className="flex justify-center">
+            <img
+              src="https://cdn.dribbble.com/users/8805637/screenshots/16312153/media/d1dbc1c5e61313fc5c81b65f8540c8e3.gif"
+              alt="Animated GIF"
+              className="w-3/5"
+            />
+          </div>
+        </div>
+        <div className="text-white text-2xl font-bold my-2 text-center">
+          You're Lost Buddy - Movie Page Not Found
+        </div>
       </h1>
-      <NavLink
-        className="flex flex-wrap justify-center inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-        to={"/"}
-      >
-        Return Back Home
-      </NavLink>
-    </>
+      <div className="flex items-center justify-center">
+        <NavLink
+          className="w-96 flex items-center justify-center text-md px-4 py-2 border rounded text-white border-white hover:border-teal-500 hover:text-teal-500 mt-4"
+          to={"/"}
+        >
+          Return Back Home
+        </NavLink>
+      </div>
+    </div>
   ) : (
     <div className="flex p-8 text-slate-300">
       <div className="mx-6 w-[300px]">
@@ -127,6 +159,21 @@ const SingleMovie = () => {
       <div className="flex-1 pl-[30px] overflow-x-hidden">
         <h1 className="mb-[8px] font-bold text-lg">
           {singleMovie.title} ({releaseYear}){" "}
+          {auth.username && isSingleInDb(singleMovie.id) && (
+            <span>
+              {isMovieInFavorites(singleMovie.id) ? (
+                <FontAwesomeIcon
+                  icon={solidHeart}
+                  onClick={() => handleToggleFavorite(singleMovie.id)}
+                />
+              ) : (
+                <FontAwesomeIcon
+                  icon={regularHeart}
+                  onClick={() => handleToggleFavorite(singleMovie.id)}
+                />
+              )}
+            </span>
+          )}
         </h1>
         <p className="text-xs"> 
           Released: {formattedDate} - Runtime: {runtimeHours}h {runtimeMinutes}m
@@ -161,6 +208,8 @@ const SingleMovie = () => {
         </section>
       </div>
     </div>
+      <ToastContainer position="bottom-right" />{" "}
+    </section>
   );
 };
 
