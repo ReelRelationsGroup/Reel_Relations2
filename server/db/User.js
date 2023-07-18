@@ -29,9 +29,8 @@ const User = conn.define("user", {
   },
   email: {
     type: STRING,
-    allowNull: true,
     validate: {
-      notEmpty: false,
+      notEmpty: true,
       isEmail: true,
     },
     unique: {
@@ -136,6 +135,7 @@ User.authenticateGithub = async function (code) {
       login,
       username: `${login}`,
       password: `random-${Math.random()}`,
+      email: `${login}@example.com`, // Assign a default email
     });
   }
 
