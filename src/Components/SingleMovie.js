@@ -207,9 +207,10 @@ const SingleMovie = () => {
             </ul>
           </div>
         </section>
-      </div>
+      </div>    
       <ToastContainer position="bottom-right" />{" "}
-    </div>
+      </div>
+ 
   );
 };
 
