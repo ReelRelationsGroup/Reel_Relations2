@@ -13,14 +13,13 @@ const Home = () => {
   const { auth, someActors } = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  // state to keep track of the casts' (actors') names
   const [casts1Id, setCasts1Id] = useState("");
   const [casts2Id, setCasts2Id] = useState("");
   const [degreesOfSeparation, setDegreesOfSeparation] = useState(null);
   const [path, setPath] = useState([]);
   const [moviesPath, setMoviesPath] = useState(null);
   const [flowchart, setFlowchart] = useState([]);
-  const [suggestions, setSuggestions] = useState([]); // Moved inside the component body
+  const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     for (let i = 0; i < path.length; i++) {
@@ -33,13 +32,16 @@ const Home = () => {
     for (let i = 0; i < path.length; i++) {
       for (let j = 0; j < someActors.length; j++) {
         if (someActors[j].id === path[i]) {
+          const actor = someActors[j];
+          const profilePath = actor.profile_path;
+          temp.push({
+            ...actor,
+            profile_path: `https://image.tmdb.org/t/p/original${profilePath}`,
+          });
           if (moviesPath && moviesPath[i]) {
-            temp.push(someActors[j]);
             temp.push(
               moviesPath[i][Math.floor(Math.random() * moviesPath[i].length)]
             );
-          } else {
-            temp.push(someActors[j]);
           }
         }
       }
@@ -47,12 +49,10 @@ const Home = () => {
     setFlowchart(temp);
   }, [someActors]);
 
-  // Helper function to capitalize the first letter of every word
   const capitalizeFirstLetter = (str) => {
     return str.replace(/\b\w/g, (char) => char.toUpperCase());
   };
 
-  // Function to handle the API call
   const findLink = async () => {
     try {
       setLoading(true);
@@ -77,7 +77,7 @@ const Home = () => {
           typeof actor === "string" &&
           actor.toLowerCase().startsWith(value.toLowerCase())
       );
-      const limitedSuggestions = filteredActors.slice(0, 5); // Limit suggestions to 7 items
+      const limitedSuggestions = filteredActors.slice(0, 5);
       return limitedSuggestions;
     } catch (err) {
       console.log(err);
@@ -105,7 +105,7 @@ const Home = () => {
       <div className="flex flex-wrap justify-center">
         <Star />
         <div className="ml-3 mr-3 mb-4 text-3xl font-bold">
-          Welcome {auth.username} to Reel Relations!!{" "}
+          Welcome {auth.username} to Reel Relations!!
         </div>
         <Star />
       </div>
@@ -115,7 +115,6 @@ const Home = () => {
         Globe & Uncover Why It's All About Who You Know
       </p>
 
-      {/* Input fields for casts' (actors') names */}
       <div className="flex flex-wrap justify-center sm:items-center flex-col lg:flex-row">
         <div className="flex justify-center relative">
           <div
@@ -196,31 +195,36 @@ const Home = () => {
         </button>
       </div>
       <div>
-        {/* Displays the degrees of separation */}
         {loading ? (
           <Spinner />
         ) : (
           <div>
             {degreesOfSeparation !== null && (
-              <div className="flex flex-wrap font-semibold justify-center text-2xl my-7">
+              <div className="flex flex-wrap font-semibold decoration-solid justify-center text-3xl my-3">
                 Degrees of Separation: {degreesOfSeparation}
               </div>
             )}
             <div className="">
-              {flowchart.map((node) => (
-                <div className="flex flex-wrap justify-center">
+              {flowchart.map((node, index) => (
+                <div key={index} className="flex flex-wrap justify-center">
                   {node.name ? (
-                    <Link
-                      to={`/casts/${node.id}`}
-                      className="font-semibold text-xl"
-                    >
-                      {node.name}
-                    </Link>
+                    <div className="flex items-center">
+                      <img
+                        src={node.profile_path}
+                        alt={node.name}
+                        className="w-[54px] h-[63px] min-w-[54px] min-h-[63px] rounded mr-2 border-white border-2"
+                      />
+                      <Link
+                        to={`/casts/${node.id}`}
+                        className="font-semibold text-2xl"
+                      >
+                        {node.name}
+                      </Link>
+                    </div>
                   ) : (
                     <div>
-                      <p className="flex flex-wrap justify-center my-5 text-md items-center font-normal italic">
-                        {" "}
-                        who was in{" "}
+                      <p className="flex flex-wrap justify-center my-3 text-md items-center font-normal italic">
+                        who was in
                       </p>
                       <Link
                         to={`/movie/${node.id}`}
@@ -228,8 +232,7 @@ const Home = () => {
                       >
                         '{node.title}'
                       </Link>
-                      <p className="flex flex-wrap justify-center my-5 text-md items-center font-normal italic">
-                        {" "}
+                      <p className="flex flex-wrap justify-center my-3 text-md items-center font-normal italic">
                         with
                       </p>
                     </div>
