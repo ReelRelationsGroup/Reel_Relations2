@@ -20,7 +20,7 @@ const Navbar = () => {
   useEffect(() => {
     dispatch(fetchActors());
     dispatch(fetchMovies());
-  },[dispatch])
+  }, [dispatch]);
 
   const renderAuthButtons = () => {
     const handleMenuOptionClick = () => {
@@ -93,14 +93,14 @@ const Navbar = () => {
     if (!actors || actors.length === 0) {
       return "";
     }
-  
+
     // Filter actors with a non-empty profile path
-    const filteredActors = actors.filter(actor => actor.profile_path);
-  
+    const filteredActors = actors.filter((actor) => actor.profile_path);
+
     if (filteredActors.length === 0) {
       return "";
     }
-  
+
     const randomIndex = Math.floor(Math.random() * filteredActors.length);
     const randomActor = filteredActors[randomIndex];
     return randomActor.id;
@@ -110,14 +110,14 @@ const Navbar = () => {
     if (!movies || movies.length === 0) {
       return "";
     }
-  
+
     // Filter actors with a non-empty profile path
-    const filteredMovies = movies.filter(movie => movie.poster_path);
-  
+    const filteredMovies = movies.filter((movie) => movie.poster_path);
+
     if (filteredMovies.length === 0) {
       return "";
     }
-  
+
     const randomIndex = Math.floor(Math.random() * filteredMovies.length);
     const randomMovie = filteredMovies[randomIndex];
     return randomMovie.id;
@@ -134,10 +134,10 @@ const Navbar = () => {
       <div className="block lg:hidden">
         <button
           onClick={toggleMenu}
-          className="flex items-center px-3 py-2 border rounded text-white-200 border-white-400 hover:text-white hover:border-teal-400"
+          className="flex items-center px-3 py-2 border rounded text-white border-white-400 hover:text-white hover:border-teal-400"
         >
           <svg
-            className="fill-current h-3 w-3"
+            className="fill-current h-3 w-3 text-white"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
           >
