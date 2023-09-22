@@ -208,11 +208,12 @@ const Home = () => {
               {flowchart.map((node, index) => (
                 <div key={index} className="flex flex-wrap justify-center">
                   {node.name ? (
+                    /* Actor Image Cards Found After Link is Found */
                     <div className="flex items-center">
                       <img
                         src={node.profile_path}
                         alt={node.name}
-                        className="w-[54px] h-[63px] min-w-[54px] min-h-[63px] rounded mr-2 border-white border-2"
+                        className="w-[65px] h-[78px] min-w-[65px] min-h-[78px] object-scale-down rounded mr-2 border-white border-2"
                       />
                       <Link
                         to={`/casts/${node.id}`}
