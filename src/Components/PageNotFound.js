@@ -10,7 +10,7 @@ export const PageNotFound = () => {
             <img
               src="https://cdn.dribbble.com/users/8805637/screenshots/16312153/media/d1dbc1c5e61313fc5c81b65f8540c8e3.gif"
               alt="Animated GIF"
-              className="w-3/5"
+              className="w-3/5 rounded-full"
             />
           </div>
         </div>

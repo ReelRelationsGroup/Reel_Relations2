@@ -17,7 +17,7 @@ const Footer = () => {
         <a href="https://www.linkedin.com/in/dorjeewangdi/">
           <img
             className="h-12 w-12 rounded-lg opacity-70 hover:opacity-100 hover:scale-110"
-            src="https://media.licdn.com/dms/image/D5635AQEh7kL96IDyew/profile-framedphoto-shrink_800_800/0/1691084633767?e=1695704400&v=beta&t=EfmMPLoE6vjPu-rgktdPLsiT-83AsytJv7eGlIq25yU"
+            src="https://media.licdn.com/dms/image/D5635AQEh7kL96IDyew/profile-framedphoto-shrink_800_800/0/1691084633767?e=1696377600&v=beta&t=VEXMScZ7pTe1M8T94drXNC6WN1VgTwEolbvZLsWZpwo"
             alt="Dorjee Wangdi"
           />
         </a>
@@ -38,7 +38,7 @@ const Footer = () => {
         <a href="https://www.linkedin.com/in/grant-way/">
           <img
             className="h-12 w-12 rounded-lg opacity-70 hover:opacity-100 hover:scale-110"
-            src="https://media.licdn.com/dms/image/D5635AQEkGQEe7UI4Jg/profile-framedphoto-shrink_800_800/0/1690220836570?e=1695704400&v=beta&t=sJ6TyjXSrcs862I9YGjVtJ52_MPZF27lauSrcw4T2-M"
+            src="https://media.licdn.com/dms/image/D5635AQEkGQEe7UI4Jg/profile-framedphoto-shrink_800_800/0/1690220836570?e=1696377600&v=beta&t=NGfBzkiicfxdVOhTga7vAPEQYDI5x3LIlHdhcLQf0ks"
             alt="Grant Way"
           />
         </a>

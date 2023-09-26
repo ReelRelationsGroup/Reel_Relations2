@@ -62,7 +62,6 @@ const App = () => {
         backgroundPosition: "center",
       }}
     >
-      {/* Your app content */}
       <button
         className="theme border rounded text-teal-200 border-white-400 hover:text-white hover:border-teal-400 flex text-md tracking-tight absolute left-6 top-2 mb-4 rounded-md focus:outline-none focus:shadow-outline"
         onClick={handleThemeToggle}
