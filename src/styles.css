@@ -2,7 +2,7 @@
 * {
   scrollbar-width: 2px;
   scrollbar-color: hsl(var(--s)) hsl(var(--p));
-  background-color: rgb(30 41 59);
+  background-color: transparent;
   box-sizing: border-box;
 }
 
@@ -112,4 +112,3 @@
     min-width: 1536px;
   }
 }
-
