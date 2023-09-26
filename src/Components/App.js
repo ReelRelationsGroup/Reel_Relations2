@@ -19,6 +19,19 @@ const App = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
+  const backgroundImages = [
+    "url('https://wallpaperaccess.com/full/17510.jpg')",
+    "url('https://wallpaperaccess.com/full/837256.jpg')",
+    "url('https://wallpaperaccess.com/full/1801911.jpg')",
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const backgroundImage = backgroundImages[currentIndex];
+
+  const handleThemeToggle = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
+  };
+
   useEffect(() => {
     // initial data loading here
     dispatch(loginWithToken());
@@ -28,7 +41,22 @@ const App = () => {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: backgroundImage,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+        minHeight: "100vh", // Ensure the background covers the entire viewport
+      }}
+    >
+      {/* Your app content */}
+      <button
+        className="theme text-white flex text-lg tracking-tight absolute left-7 top-12 px-3 py-2 rounded-md focus:outline-none focus:shadow-outline"
+        onClick={handleThemeToggle}
+      >
+        Change Theme
+      </button>
       <div>
         <Navbar />
         <Routes>
@@ -48,7 +76,7 @@ const App = () => {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
-      <div className="h-20"/>
+      <div className="h-20 bg-transparent" />
       <Footer />
     </div>
   );
