@@ -68,7 +68,6 @@ const SingleCast = () => {
     ?.join(" ");
   const showReadMore = singleActor?.biography?.split(" ").length > 100;
 
-
   if (!singleActor || !singleActor.movie_credits) {
     return (
       // <div className="flex flex-col items-center justify-start h-screen">
@@ -120,9 +119,8 @@ const SingleCast = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-
   return (
-    <div className="flex p-8 text-slate-300">
+    <div className="flex p-8 text-white">
       <div className="mx-6">
         {auth.username && (
           <span>
