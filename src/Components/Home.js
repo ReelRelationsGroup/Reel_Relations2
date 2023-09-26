@@ -146,7 +146,7 @@ const Home = () => {
               input:
                 "p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-slate-600 focus:outline-none",
               suggestionsContainer:
-                "absolute z-10 mt-2 w-full rounded-lg shadow-lg",
+                "absolute z-10 mt-2 w-full max-w-md rounded-lg shadow-lg", // Set max-width here
               suggestionsList: "bg-black",
             }}
           />
@@ -181,7 +181,7 @@ const Home = () => {
               input:
                 "p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-slate-600 focus:outline-none",
               suggestionsContainer:
-                "absolute z-10 mt-2 w-full rounded-lg shadow-lg",
+                "absolute z-10 mt-2 w-full max-w-md rounded-lg shadow-lg", // Set max-width here
               suggestionsList: "bg-black",
             }}
           />

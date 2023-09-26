@@ -138,7 +138,7 @@ const SingleMovie = () => {
     // </div>
     <Spinner />
   ) : (
-    <div className="flex p-8 text-text-white">
+    <div className="flex p-8 text-white">
       <div className="mx-6 w-[300px]">
         {/* {auth.username && (
           <span>
@@ -161,7 +161,7 @@ const SingleMovie = () => {
           alt="Movie Poster"
         />
       </div>
-      <div className="flex-1 pl-[30px] overflow-x-hidden">
+      <div className="flex-1 pl-[30px] overflow-x-hidden text-white">
         <h1 className="mb-[8px] font-bold text-lg">
           {singleMovie.title} ({releaseYear}){" "}
           {auth.username && isSingleInDb(singleMovie.id) && (
