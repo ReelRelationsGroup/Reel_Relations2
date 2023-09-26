@@ -37,32 +37,33 @@ const StarRating = ({ rating }) => {
 const SingleMovie = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { singleMovie, favoriteMovies, auth, movies } = useSelector((state) => state);
+  const { singleMovie, favoriteMovies, auth, movies } = useSelector(
+    (state) => state
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const actorsPerPage = 15;
 
-
   const isMovieInFavorites = (movieId) => {
-    console.log('favoriteMovies:', favoriteMovies);
-    console.log('movieId:', movieId);
-  
+    console.log("favoriteMovies:", favoriteMovies);
+    console.log("movieId:", movieId);
+
     if (!favoriteMovies || favoriteMovies.length === 0) {
       return false;
     }
-  
+
     const isFavorite = favoriteMovies.some((movie) => {
       console.log(movie);
       console.log(movie.movieId === movieId);
       return movie.movieId === movieId;
     });
-  
-    console.log('isFavorite:', isFavorite);
+
+    console.log("isFavorite:", isFavorite);
     return isFavorite;
   };
-  
+
   const isSingleInDb = (movieId) => {
     return movies.some((movie) => movie.id === movieId);
-  }
+  };
 
   const handleToggleFavorite = (movieId) => {
     if (isMovieInFavorites(movieId)) {
@@ -89,12 +90,15 @@ const SingleMovie = () => {
   const runtimeHours = Math.floor(singleMovie.runtime / 60);
   const runtimeMinutes = singleMovie.runtime % 60;
 
-  const filteredCast = singleMovie.credits?.cast.filter((cast) => cast.popularity > 0);
+  const filteredCast = singleMovie.credits?.cast.filter(
+    (cast) => cast.popularity > 0
+  );
   const sortedPopularity =
     filteredCast?.length < 10
       ? filteredCast
-      : filteredCast
-          ?.sort((actor1, actor2) => actor2.popularity - actor1.popularity);
+      : filteredCast?.sort(
+          (actor1, actor2) => actor2.popularity - actor1.popularity
+        );
 
   const indexOfLastActor = currentPage * actorsPerPage;
   const indexOfFirstActor = indexOfLastActor - actorsPerPage;
@@ -102,8 +106,8 @@ const SingleMovie = () => {
     indexOfFirstActor,
     indexOfLastActor
   );
-  const popularActors = sortedPopularity?.slice(0,10);
-  console.log(popularActors)
+  const popularActors = sortedPopularity?.slice(0, 10);
+  console.log(popularActors);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -134,7 +138,7 @@ const SingleMovie = () => {
     // </div>
     <Spinner />
   ) : (
-    <div className="flex p-8 text-slate-300">
+    <div className="flex p-8 text-text-white">
       <div className="mx-6 w-[300px]">
         {/* {auth.username && (
           <span>
@@ -176,11 +180,11 @@ const SingleMovie = () => {
             </span>
           )}
         </h1>
-        <p className="text-xs"> 
+        <p className="text-xs">
           Released: {formattedDate} - Runtime: {runtimeHours}h {runtimeMinutes}m
         </p>
         <p className="flex flex-wrap font-bold text-sm">
-        User Score <StarRating rating={singleMovie.vote_average} /> 
+          User Score <StarRating rating={singleMovie.vote_average} />
         </p>
         <section className="mt-[30px]">
           <h2 className="mb-[8px] font-bold text-lg">Overview</h2>
@@ -196,7 +200,8 @@ const SingleMovie = () => {
                     <Link to={`/casts/${actor.id}`}>
                       <img
                         className="w-[130px] h-[195px] object-cover"
-                        src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`} />
+                        src={`https://image.tmdb.org/t/p/original/${actor.profile_path}`}
+                      />
                       <div className="text-center">{actor.name}</div>
                     </Link>
                     <div className="text-center">as </div>
@@ -207,10 +212,9 @@ const SingleMovie = () => {
             </ul>
           </div>
         </section>
-      </div>    
-      <ToastContainer position="bottom-right" />{" "}
       </div>
- 
+      <ToastContainer position="bottom-right" />{" "}
+    </div>
   );
 };
 

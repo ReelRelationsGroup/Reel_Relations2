@@ -20,9 +20,19 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   const backgroundImages = [
-    "url('https://wallpaperaccess.com/full/17510.jpg')",
-    "url('https://wallpaperaccess.com/full/837256.jpg')",
-    "url('https://wallpaperaccess.com/full/1801911.jpg')",
+    "url('https://e1.pxfuel.com/desktop-wallpaper/353/386/desktop-wallpaper-red-carpet-animation-motion-backgrounds-red-carpet-background.jpg')",
+    "url('https://s.yimg.com/ny/api/res/1.2/vYszp9aUDNA3PjiNeesKWw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTYwOTtjZj13ZWJw/https://media.zenfs.com/en/lifestyle_asia_my_409/9a70fe3552d57406984a39fd7e75df5e')",
+    "url('https://curiocity.com/wp-content/uploads/2021/03/ohoo-cgv-screenx_key-visual_grand_final_170801_low-2-1265x600.jpg')",
+    "url('https://i.pinimg.com/originals/ba/95/f1/ba95f16da373efae78981d304487a08f.jpg')",
+    "url('https://static.vecteezy.com/system/resources/previews/014/947/198/large_2x/movie-theater-hall-with-panoramic-screen-free-vector.jpg')",
+    "url('https://www.hollywoodreporter.com/wp-content/uploads/2022/06/imax-04-220420.jpg')",
+    "url('https://ak5.picdn.net/shutterstock/videos/33621025/thumb/1.jpg')",
+    "url('https://static.vecteezy.com/system/resources/previews/015/008/166/non_2x/young-woman-in-cinema-mesmerized-girl-and-pop-corn-free-vector.jpg')",
+    "url('https://wallpaperaccess.com/full/1820719.jpg')",
+    "url('https://static.vecteezy.com/system/resources/previews/016/265/372/large_2x/movie-theater-with-panoramic-screen-with-galaxy-free-vector.jpg')",
+    "url('https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2017/07/imax.jpg')",
+    "url('https://www.thespruce.com/thmb/qZuEutzBNf7qRmnkbd10DtE4c6w=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/home-theater-room-getty-vostok-57f55aeb3df78c690f118170.jpg')",
+    "url('https://static.vecteezy.com/system/resources/previews/016/263/215/large_2x/movie-theater-cinema-hall-with-wide-screen-seats-free-vector.jpg')",
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);

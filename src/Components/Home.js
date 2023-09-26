@@ -101,7 +101,7 @@ const Home = () => {
   };
 
   return (
-    <div className="text-slate-300">
+    <div className="text-white">
       <div className="flex flex-wrap justify-center">
         <Star />
         <div className="ml-3 mr-3 mb-4 text-3xl font-bold">
@@ -139,15 +139,15 @@ const Home = () => {
                 setCasts1Id(capitalizeFirstLetter(newValue)),
               placeholder: "Enter 1st Actor",
               className:
-                "join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200",
+                "join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-slate-600",
             }}
             theme={{
               container: "w-full",
               input:
-                "p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-base-200 focus:outline-none",
+                "p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-slate-600 focus:outline-none",
               suggestionsContainer:
                 "absolute z-10 mt-2 w-full rounded-lg shadow-lg",
-              suggestionsList: "bg-white",
+              suggestionsList: "bg-black",
             }}
           />
         </div>
@@ -174,15 +174,15 @@ const Home = () => {
                 setCasts2Id(capitalizeFirstLetter(newValue)),
               placeholder: "Enter 2nd Actor",
               className:
-                "join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-base-200",
+                "join-item flex items-center border-2 border-lime-400 border-secondary text-2xl font-bold normal-case hover:bg-slate-600",
             }}
             theme={{
               container: "w-full",
               input:
-                "p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-base-200 focus:outline-none",
+                "p-2 pl-10 pr-4 rounded-l-md border border-lime-400 text-2xl font-bold normal-case hover:bg-slate-600 focus:outline-none",
               suggestionsContainer:
                 "absolute z-10 mt-2 w-full rounded-lg shadow-lg",
-              suggestionsList: "bg-white",
+              suggestionsList: "bg-black",
             }}
           />
         </div>
